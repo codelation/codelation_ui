@@ -15,20 +15,24 @@
     console.warn("Loaded Vue")
     console.warn(App.vue);
 
-    App.vue.root = new Vue({
+    // All vue components inherit this.  Used to show the vue page after the js loads
+    Vue.mixin({
       mixins: [App.vue.interfaces.contentFormatters, App.vue.interfaces.custom],
+      methods: {
+        numeral: numeral,
+        moment: moment
+      }
+    });
+    
+    App.vue.root = new Vue({
       el: "body",
       components: components,
       data: function() {
         return {
           pageLoadedClass: "vue-page-loaded"
         }
-      },
-      methods: {
-        numeral: numeral,
-        moment: moment
       }
-    })
+    });
   }).exit(function() {
     App.vue.extend = {};
     App.vue.root = null;
