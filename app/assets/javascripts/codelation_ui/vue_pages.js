@@ -22,16 +22,17 @@
   App.register('last').enter(function() {
     console.warn("Loaded Vue")
     console.warn(App.vue);
-    
-    App.vue.root = new Vue({
-      el: "body",
-      components: App.vue.extend,
-      data: function() {
-        return {
-          pageLoadedClass: "vue-page-loaded"
+    if (App.vue.root === null) {
+      App.vue.root = new Vue({
+        el: "body",
+        components: App.vue.extend,
+        data: function() {
+          return {
+            pageLoadedClass: "vue-page-loaded"
+          }
         }
-      }
-    });
+      });
+    }
   }).exit(function() {
     App.vue.extend = {};
     App.vue.root = null;
