@@ -7,6 +7,3 @@ App.vue = {
   components: {},
   config: {}
 }
-
-console.warn("Loaded Vue Interfaces")
-console.warn(App.vue.interfaces);
