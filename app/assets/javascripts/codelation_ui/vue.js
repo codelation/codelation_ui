@@ -6,6 +6,6 @@ App.vue = {
   interfaces: {},
   components: {},
   config: {},
-  root: {},
+  root: null,
   extend: {}
 }
