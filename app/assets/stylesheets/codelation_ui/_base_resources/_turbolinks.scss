@@ -1,0 +1,11 @@
+@if variable-exists(accent-color) {
+  $progress-bar-color: $accent-color !default;
+  html.turbolinks-progress-bar::before {
+    background-color: $progress-bar-color !important;
+  }
+}@else{
+  $progress-bar-color: $default-ui-color !default;
+  html.turbolinks-progress-bar::before {
+    background-color: $progress-bar-color !important;
+  }
+}

@@ -1,7 +1,6 @@
 //= require vue
-//= require ./std
 //= require_self
-
+//= require ./std
 
 App.vue = {
   interfaces: {},

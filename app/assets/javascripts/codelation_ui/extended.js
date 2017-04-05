@@ -1,1 +1,1 @@
-//= require_tree ./extended
+//= require ./extended/slider

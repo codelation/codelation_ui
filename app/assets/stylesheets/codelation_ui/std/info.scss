@@ -1,0 +1,51 @@
+.vue-info {
+  display: inline-block;
+  position: relative;
+
+  .vue-info-hint {
+    @include align-items(center);
+    @include display(inline-flex);
+    @include justify-content(center);
+    background: rgba($black, 0.55);
+    border-radius: 100%;
+    color: $white;
+    cursor: pointer;
+    font-weight: normal;
+    height: 1.3em;
+    width: 1.3em;
+
+    &:hover ~ .vue-info-message {
+      visibility: visible;
+    }
+  }
+
+  .vue-info-message {
+    background-color: rgba($black, 0.6);
+    border-radius: 2px;
+    color: $white;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 22px;
+    margin: 15px 10px 0 0;
+    padding: 0 8px;
+    position: absolute;
+    top: 10px;
+    visibility: hidden;
+    width: 200px;
+
+    &.left {
+      left: auto;
+      right: 10px;
+    }
+
+    &.top {
+      bottom: 30px;
+      top: auto;
+    }
+
+    &.bottom {
+      bottom: auto;
+      top: 10px;
+    }
+  }
+}

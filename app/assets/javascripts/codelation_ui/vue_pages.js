@@ -3,7 +3,7 @@
 
   App.register('component').enter(function() {
     App.vue.currentPage = new Vue({
-      mixin: [App.vue.interfaces.contentFormatters],
+      mixins: [App.vue.interfaces.contentFormatters],
       el: "body",
       methods: {
         numeral: numeral,

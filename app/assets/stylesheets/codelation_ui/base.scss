@@ -4,6 +4,8 @@
 // Used to set the max-width with the outer-container mixin
 $max-width: 1024px !default;
 
+$default-ui-color: #0366d6 !default;
+
 // Used for has-cards, has-columns, and has-grid mixins. When the
 // viewport reaches the mobile-breakpoint, the columns will be stacked.
 $mobile-breakpoint: 767px !default;

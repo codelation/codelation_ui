@@ -1,5 +1,5 @@
-$vue-slider-track-color: #0366d6 !default;
-$vue-slider-tool-tip-bg-color: #0366d6 !default;
+$vue-slider-track-color: $default-ui-color !default;
+$vue-slider-tool-tip-bg-color: $default-ui-color !default;
 $vue-slider-tool-tip-text-color: #ffffff !default;
 
 .vue-slider-wrap {

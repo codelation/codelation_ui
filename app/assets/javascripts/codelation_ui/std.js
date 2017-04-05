@@ -1,1 +1,2 @@
-//= require_tree ./std
+//= require_tree ./std/interfaces
+//= require_tree ./std/components
