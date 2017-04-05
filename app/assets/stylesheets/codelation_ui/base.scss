@@ -1,0 +1,27 @@
+// A collection of Sass functions and mixins used by Codelation
+// https://codelation.com
+
+// Used to set the max-width with the outer-container mixin
+$max-width: 1024px !default;
+
+// Used for has-cards, has-columns, and has-grid mixins. When the
+// viewport reaches the mobile-breakpoint, the columns will be stacked.
+$mobile-breakpoint: 767px !default;
+
+@import "_base_resources/bourbon/bourbon";
+@import "_base_resources/functions/**/*";
+@import "_base_resources/mixins/**/*";
+@import "_base_resources/normalize";
+
+// Border Box by default for all elements
+html { // http://bit.ly/1qk2tVR
+  box-sizing: border-box;
+}
+
+* {
+  &,
+  &::after,
+  &::before {
+    box-sizing: inherit;
+  }
+}
