@@ -4,6 +4,7 @@
 
 App.vue = {
   interfaces: {},
+  computedInterfaces: {},
   components: {},
   config: {},
   root: null,
