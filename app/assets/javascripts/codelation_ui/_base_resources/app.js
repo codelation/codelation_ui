@@ -61,31 +61,55 @@
     bodyElement = $('body');
 
     // Determine which functions should be fired
+    var fireFirstFunctions = [];
     var fireFunctions = [];
+    var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
       if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
+      
+      if (bodyClass === 'last') {
+       fireLastFunctions = fireLastFunctions.concat(functions); 
+      }
+      
+      if (bodyClass === 'first') {
+       fireFirstFunctions = fireFirstFunctions.concat(functions); 
+      }
     });
 
     // Fire off each function
+    $.each(fireFirstFunctions, function() { this.call(); });
     $.each(fireFunctions, function() { this.call(); });
+    $.each(fireLastFunctions, function() { this.call(); });
   });
 
   // Fires off any callbacks registered for exit, ONLY if using Turbolinks.
   $(document).on('page:before-unload', function() {
+    var fireFirstFunctions = [];
     var fireFunctions = [];
-
+    var fireLastFunctions = [];
+    
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
       if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
+      
+      if (bodyClass === 'last') {
+       fireLastFunctions = fireLastFunctions.concat(functions); 
+      }
+      
+      if (bodyClass === 'first') {
+       fireFirstFunctions = fireFirstFunctions.concat(functions); 
+      }
     });
 
     // Fire off each function
+    $.each(fireFirstFunctions, function() { this.call(); });
     $.each(fireFunctions, function() { this.call(); });
+    $.each(fireLastFunctions, function() { this.call(); });
   });
 })();
