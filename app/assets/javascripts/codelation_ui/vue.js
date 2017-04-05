@@ -5,5 +5,7 @@
 App.vue = {
   interfaces: {},
   components: {},
-  config: {}
+  config: {},
+  root: {},
+  extend: {}
 }
