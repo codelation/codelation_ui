@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  App.register('component').enter(function() {
+  App.register('last').enter(function() {
       
     // Insert the customizable global interface
     if (App.vue.interfaces.custom === undefined) {
