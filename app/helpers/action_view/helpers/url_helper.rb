@@ -10,7 +10,7 @@ module ActionView
         url = url_for(options)
 
         if current_page?(url)
-          html_options["class"] += " current"
+          html_options["class"] = "current " + (html_options["class"] || "")
         end
 
         html_options['href'] ||= url
