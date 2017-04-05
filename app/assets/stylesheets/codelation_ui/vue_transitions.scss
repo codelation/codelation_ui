@@ -1,0 +1,10 @@
+.v-fade-in-out-transition {
+  @include transition(all, .3s);
+  opacity: 1;
+
+  &.v-fade-in-out-leave,
+  &.v-fade-in-out-enter {
+    @include transform(scale(.99));
+    opacity: 0;
+  }
+}
