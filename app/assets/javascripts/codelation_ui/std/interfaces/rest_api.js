@@ -61,17 +61,17 @@
           var path = url + '/' + id;
         }
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return this.sendRequest(requestUrl, 'GET');
+        return this._sendRequest(requestUrl, 'GET');
       },
       _restfulGetAll: function(model, options) {
         var requestUrl = toPath(model) + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return this.sendRequest(requestUrl, 'GET');
+        return this._sendRequest(requestUrl, 'GET');
       },
       _restfulCreate: function(model, id, data, options) {
         var url = toPath(model);
         var path = url;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return this.sendRequest(requestUrl, 'POST', data);
+        return this._sendRequest(requestUrl, 'POST', data);
       },
       _restfulUpdate: function(model, id, data, options) {
         var url = toPath(model);
@@ -81,13 +81,13 @@
           var path = url + '/' + id;
         }
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return this.sendRequest(requestUrl, 'PATCH', data);
+        return this._sendRequest(requestUrl, 'PATCH', data);
       },
       _restfulDelete: function(model, id, options) {
         var url = toPath(model);
         var path = url + '/' + id;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return this.sendRequest(requestUrl, 'DELETE');
+        return this._sendRequest(requestUrl, 'DELETE');
       }
     }
   }
