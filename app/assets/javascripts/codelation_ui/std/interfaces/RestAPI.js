@@ -45,6 +45,8 @@
     });
   }
 
+  // Config options
+  App.vue.config.RestAPI.DefaultOptions = {};
 
   App.vue.interfaces.RestAPI = {
     methods: {
