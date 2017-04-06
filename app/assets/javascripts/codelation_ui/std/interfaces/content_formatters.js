@@ -3,19 +3,19 @@
   App.vue.interfaces.contentFormatters = {
     methods: {
       _formatToCurrency: function(value, custom_number_format, nullReturn) {
-        if (value === undefined || value === null || !isNaN(value)) {
+        if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || '-'; 
         }
         return numeral(value).format('$' + (custom_number_format || '0,0[.]00'));
       },
       _formatToPercent: function(value, custom_number_format, nullReturn) {
-        if (value === undefined || value === null || !isNaN(value)) {
+        if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || '-'; 
         }
         return numeral(value / 100).format((custom_number_format || '0,0[.]00') + '%');
       },
       _formatToNumber: function(value, custom_number_format, nullReturn) {
-        if (value === undefined || value === null || !isNaN(value)) {
+        if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || '-'; 
         }
         return numeral(value).format(custom_number_format || '0,0[.]00');
