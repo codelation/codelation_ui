@@ -85,7 +85,11 @@
       },
       _restfulDelete: function(model, id, options) {
         var url = toPath(model);
-        var path = url + '/' + id;
+        if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
+          var path = url + '/';
+        }else{
+          var path = url + '/' + id;
+        }
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return this._sendRequest(requestUrl, 'DELETE');
       }
