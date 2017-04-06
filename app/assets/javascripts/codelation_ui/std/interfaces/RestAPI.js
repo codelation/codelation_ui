@@ -54,7 +54,7 @@
 
   App.vue.interfaces.rest_api = {
     methods: {
-      RestfulGet: function(model, id, options) {
+      _restfulGet: function(model, id, options) {
         if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
           return this.RestfulGetAll(model, options);
         }else{
@@ -64,17 +64,17 @@
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'GET');
       },
-      RestfulGetAll: function(model, options) {
+      _restfulGetAll: function(model, options) {
         var requestUrl = toPath(model) + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'GET');
       },
-      RestfulCreate: function(model, id, data, options) {
+      _restfulCreate: function(model, id, data, options) {
         var url = toPath(model);
         var path = url;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'POST', data);
       },
-      RestfulUpdate: function(model, id, data, options) {
+      _restfulUpdate: function(model, id, data, options) {
         var url = toPath(model);
         if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
           var path = url + '/';
@@ -84,7 +84,7 @@
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'PATCH', data);
       },
-      RestfulDelete: function(model, id, options) {
+      _restfulDelete: function(model, id, options) {
         var url = toPath(model);
         var path = url + '/' + id;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
@@ -92,5 +92,4 @@
       }
     }
   }
-
 })();
