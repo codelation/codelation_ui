@@ -43,17 +43,16 @@
       return '';
     }
   }
-  
-  function sendRequest(url, method, data) {
-    return $.ajax({
-      url: url,
-      type: method || 'GET',
-      data: data || {}
-    });
-  }
 
   App.vue.interfaces.rest_api = {
     methods: {
+      _sendRequest: function(url, method, data) {
+        return $.ajax({
+          url: url,
+          type: method || 'GET',
+          data: data || {}
+        });
+      },
       _restfulGet: function(model, id, options) {
         if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
           return this.RestfulGetAll(model, options);
@@ -62,17 +61,17 @@
           var path = url + '/' + id;
         }
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return sendRequest(requestUrl, 'GET');
+        return this.sendRequest(requestUrl, 'GET');
       },
       _restfulGetAll: function(model, options) {
         var requestUrl = toPath(model) + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return sendRequest(requestUrl, 'GET');
+        return this.sendRequest(requestUrl, 'GET');
       },
       _restfulCreate: function(model, id, data, options) {
         var url = toPath(model);
         var path = url;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return sendRequest(requestUrl, 'POST', data);
+        return this.sendRequest(requestUrl, 'POST', data);
       },
       _restfulUpdate: function(model, id, data, options) {
         var url = toPath(model);
@@ -82,13 +81,13 @@
           var path = url + '/' + id;
         }
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return sendRequest(requestUrl, 'PATCH', data);
+        return this.sendRequest(requestUrl, 'PATCH', data);
       },
       _restfulDelete: function(model, id, options) {
         var url = toPath(model);
         var path = url + '/' + id;
         var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
-        return sendRequest(requestUrl, 'DELETE');
+        return this.sendRequest(requestUrl, 'DELETE');
       }
     }
   }
