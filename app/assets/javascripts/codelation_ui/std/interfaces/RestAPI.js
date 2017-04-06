@@ -1,18 +1,25 @@
 (function(){
   "use strict";
 
+  // Config options
+  App.vue.config.rest_api = {
+    'options': {},
+    'version': null
+  };
+  
+  
 
   function url() {
-    if (App.api.version === undefined) {
+    if (App.vue.config.rest_api.version === null) {
       return '/api';
     }else{
-      return '/api/v' + App.api.version;
+      return '/api/v' + App.vue.config.rest_api.version;
     }
   }
 
   function toPath(model) {
-    var pluralModel = App.pluralize(model);
-    var modelPath = App.dasherize(pluralModel);
+    var pluralModel = App.vue.interfaces.string.methods._pluralize(model);
+    var modelPath = App.vue.interfaces.string.methods._dasherize(pluralModel);
     return url() + '/' + modelPath;
   }
 
@@ -45,10 +52,7 @@
     });
   }
 
-  // Config options
-  App.vue.config.RestAPI.DefaultOptions = {};
-
-  App.vue.interfaces.RestAPI = {
+  App.vue.interfaces.rest_api = {
     methods: {
       RestfulGet: function(model, id, options) {
         if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
@@ -57,17 +61,17 @@
           var url = toPath(model);
           var path = url + '/' + id;
         }
-        var requestUrl = path + queryStringFromOptions(options, App.vue.config.RestAPI.DefaultOptions);
+        var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'GET');
       },
       RestfulGetAll: function(model, options) {
-        var requestUrl = toPath(model) + queryStringFromOptions(options, App.vue.config.RestAPI.DefaultOptions);
+        var requestUrl = toPath(model) + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'GET');
       },
       RestfulCreate: function(model, id, data, options) {
         var url = toPath(model);
         var path = url;
-        var requestUrl = path + queryStringFromOptions(options, App.vue.config.RestAPI.DefaultOptions);
+        var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'POST', data);
       },
       RestfulUpdate: function(model, id, data, options) {
@@ -77,13 +81,13 @@
         }else{
           var path = url + '/' + id;
         }
-        var requestUrl = path + queryStringFromOptions(options, App.vue.config.RestAPI.DefaultOptions);
+        var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'PATCH', data);
       },
       RestfulDelete: function(model, id, options) {
         var url = toPath(model);
         var path = url + '/' + id;
-        var requestUrl = path + queryStringFromOptions(options, App.vue.config.RestAPI.DefaultOptions);
+        var requestUrl = path + queryStringFromOptions(options, App.vue.config.rest_api.options);
         return sendRequest(requestUrl, 'DELETE');
       }
     }
