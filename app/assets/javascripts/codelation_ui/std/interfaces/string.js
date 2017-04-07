@@ -9,6 +9,7 @@
                      .toLowerCase()
                      .replace((/[ -]/g), '_');
       },
+      _pluralize: pluralize,
       // Returns the lowerCamelCase form of a string.
       _dasherize: function(string) {
         return string.replace((/([a-z\d])([A-Z])/g), '$1_$2')
