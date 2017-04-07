@@ -55,7 +55,7 @@
       },
       _restfulGet: function(model, id, options) {
         if (App.vue.interfaces.contentValidators.methods._valueIsEmpty(id)) {
-          return this.RestfulGetAll(model, options);
+          return this._restfulGetAll(model, options);
         }else{
           var url = toPath(model);
           var path = url + '/' + id;
