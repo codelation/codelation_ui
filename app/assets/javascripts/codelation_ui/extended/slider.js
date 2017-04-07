@@ -153,7 +153,7 @@
     		labelActiveStyle: Object
     	},
     	computed: {
-    		flowDirection() {
+    		flowDirection: function() {
     			return `vue-slider-${this.direction + (this.reverse ? '-reverse' : '')}`
     		},
     		tooltipDirection() {
@@ -165,35 +165,35 @@
     				return this.isRange ? [dir, dir] : dir
     			}
     		},
-    		tooltipStatus() {
+    		tooltipStatus: function() {
     			return this.tooltip === 'hover' && this.flag ? 'vue-slider-always' : this.tooltip ? `vue-slider-${this.tooltip}` : ''
     		},
-    		tooltipClass() {
+    		tooltipClass: function() {
     			return [`vue-slider-tooltip-${this.tooltipDirection}`, 'vue-slider-tooltip']
     		},
-    		isMoblie() {
+    		isMoblie: function() {
     			return this.eventType === 'touch' || this.eventType !== 'mouse' && /(iPhone|iPad|iPod|iOS|Android|SymbianOS|Windows Phone|Mobile)/i.test(navigator.userAgent)
     		},
-    		isDisabled() {
+    		isDisabled: function() {
     			return this.eventType === 'none' ? true : this.disabled
     		},
-    		disabledClass() {
+    		disabledClass: function() {
     			return this.disabled ? 'vue-slider-disabled' : ''
     		},
-    		isRange() {
+    		isRange: function() {
     			return Array.isArray(this.value)
     		},
-    		slider() {
+    		slider: function() {
     			return this.isRange ? [this.$els.dot0, this.$els.dot1] : this.$els.dot
     		},
-    		minimum() {
+    		minimum: function() {
     			return this.data ? 0 : this.min
     		},
     		val: {
-    			get() {
+    			get: function() {
     				return this.data ? (this.isRange ? [this.data[this.currentValue[0]], this.data[this.currentValue[1]]] : this.data[this.currentValue]) : this.currentValue
     			},
-    			set(val) {
+    			set: function(val) {
     				if (this.data) {
     					if (this.isRange) {
     						let index0 = this.data.indexOf(val[0])
@@ -214,7 +214,7 @@
     				}
     			}
     		},
-    		currentIndex() {
+    		currentIndex: function() {
     			if (this.isRange) {
     				return this.data ? this.currentValue : [(this.currentValue[0] - this.minimum) / this.spacing, (this.currentValue[1] - this.minimum) / this.spacing]
     			}
@@ -222,7 +222,7 @@
     				return (this.currentValue - this.minimum) / this.spacing
     			}
     		},
-    		indexRange() {
+    		indexRange: function() {
     			if (this.isRange) {
     				return this.currentIndex
     			}
@@ -230,17 +230,17 @@
     				return [0, this.currentIndex]
     			}
     		},
-    		maximum() {
+    		maximum: function() {
     			return this.data ? (this.data.length - 1) : this.max
     		},
-    		multiple() {
+    		multiple: function() {
     			let decimals = `${this.interval}`.split('.')[1]
     			return decimals ? Math.pow(10, decimals.length) : 1
     		},
-    		spacing() {
+    		spacing: function() {
     			return this.data ? 1 : this.interval
     		},
-    		total() {
+    		total: function() {
     			if (this.data) {
     				return this.data.length - 1
     			}
@@ -249,19 +249,19 @@
     			}
     			return (this.maximum - this.minimum) / this.interval
     		},
-    		gap() {
+    		gap: function() {
     			return this.size / this.total
     		},
-    		position() {
+    		position: function() {
     			return this.isRange ? [(this.currentValue[0] - this.minimum) / this.spacing * this.gap, (this.currentValue[1] - this.minimum) / this.spacing * this.gap] : ((this.currentValue - this.minimum) / this.spacing * this.gap)
     		},
-    		limit() {
+    		limit: function() {
     			return this.isRange ? [[0, this.position[1]], [this.position[0], this.size]] : [0, this.size]
     		},
-    		valueLimit() {
+    		valueLimit: function() {
     			return this.isRange ? [[this.minimum, this.currentValue[1]], [this.currentValue[0], this.maximum]] : [this.minimum, this.maximum]
     		},
-    		wrapStyles() {
+    		wrapStyles: function() {
     			return this.direction === 'vertical' ? {
     				height: typeof this.height === 'number' ? `${this.height}px` : this.height,
     				padding: `${this.dotSize / 2}px`
@@ -270,7 +270,7 @@
     				padding: `${this.dotSize / 2}px`
     			}
     		},
-    		sliderStyles() {
+    		sliderStyles: function() {
     			if (Array.isArray(this.sliderStyle)) {
     				return this.isRange ? this.sliderStyle : this.sliderStyle[1]
     			}
@@ -278,7 +278,7 @@
     				return this.isRange ? [this.sliderStyle, this.sliderStyle] : this.sliderStyle
     			}
     		},
-    		tooltipStyles() {
+    		tooltipStyles: function() {
     			if (Array.isArray(this.tooltipStyle)) {
     				return this.isRange ? this.tooltipStyle : this.tooltipStyle[1]
     			}
@@ -286,7 +286,7 @@
     				return this.isRange ? [this.tooltipStyle, this.tooltipStyle] : this.tooltipStyle
     			}
     		},
-    		elemStyles() {
+    		elemStyles: function() {
     			return this.direction === 'vertical' ? {
     				width: `${this.width}px`,
     				height: '100%'
@@ -294,7 +294,7 @@
     				height: `${this.height}px`
     			}
     		},
-    		dotStyles() {
+    		dotStyles: function() {
     			return this.direction === 'vertical' ? {
     				width: `${this.dotSize}px`,
     				height: `${this.dotSize}px`,
@@ -305,7 +305,7 @@
     				top: `${(-(this.dotSize - this.height) / 2)}px`
     			}
     		},
-    		piecewiseDotStyle() {
+    		piecewiseDotStyle: function() {
     			return this.direction === 'vertical' ? {
     				width: `${this.width}px`,
     				height: `${this.width}px`
@@ -314,7 +314,7 @@
     				height: `${this.height}px`
     			}
     		},
-    		piecewiseDotWrap() {
+    		piecewiseDotWrap: function() {
     			if (!this.piecewise) {
     				return false
     			}
@@ -341,13 +341,13 @@
     		}
     	},
     	watch: {
-    		value(val) {
+    		value: function(val) {
     			this.flag || this.setValue(val)
     		},
         currentValue: function(val) {
     			this.value = this.val
     		},
-    		max(val) {
+    		max: function(val) {
     			if (this.flag || this.data) {
     				this.refresh()
     			}
@@ -368,7 +368,7 @@
     				this.refresh()
     			}
     		},
-    		min(val) {
+    		min: function(val) {
     			if (this.flag || this.data) {
     				this.refresh()
     			}
@@ -389,7 +389,7 @@
     				this.refresh()
     			}
     		},
-    		show(bool) {
+    		show: function(bool) {
     			if (bool && !this.size) {
     				this.$nextTick(() => {
     					this.refresh()
@@ -398,7 +398,7 @@
     		}
     	},
     	methods: {
-        styleMerge(one, two) {
+        styleMerge: function(one, two) {
           if (one === undefined) {
             return two;
           }
@@ -408,7 +408,7 @@
           for (var attrname in two) { one[attrname] = two[attrname]; }
           return one;
         },
-    		bindEvents() {
+    		bindEvents: function() {
     			if (this.isMoblie) {
     				this.$els.wrap.addEventListener('touchmove', this.moving)
     				this.$els.wrap.addEventListener('touchend', this.moveEnd)
@@ -419,7 +419,7 @@
     				document.addEventListener('mouseleave', this.moveEnd)
     			}
     		},
-    		unbindEvents() {
+    		unbindEvents: function() {
     			window.removeEventListener('resize', this.refresh)
 
     			if (this.isMoblie) {
@@ -432,14 +432,14 @@
     				document.removeEventListener('mouseleave', this.moveEnd)
     			}
     		},
-    		formatting(value) {
+    		formatting: function(value) {
     			return typeof this.formatter === 'string' ? this.formatter.replace(/\{value\}/, value) : this.formatter(value)
     		},
-    		getPos(e) {
+    		getPos: function(e) {
     			this.realTime && this.getStaticData()
     			return this.direction === 'vertical' ? (this.reverse ? (e.pageY - this.offset) : (this.size - (e.pageY - this.offset))) : (this.reverse ? (this.size - (e.clientX - this.offset)) : (e.clientX - this.offset))
     		},
-    		wrapClick(e) {
+    		wrapClick: function(e) {
     			if (this.isDisabled || !this.clickable) return false
     			let pos = this.getPos(e)
     			if (this.isRange) {
@@ -447,7 +447,7 @@
     			}
     			this.setValueOnPos(pos)
     		},
-    		moveStart(index) {
+    		moveStart: function(index) {
     			if (this.isDisabled) return false
     			else if (this.isRange) {
     				this.currentSlider = index
@@ -455,14 +455,14 @@
     			this.flag = true
     			this.$emit('drag-start', this)
     		},
-    		moving(e) {
+    		moving: function(e) {
     			if (!this.flag) return false
     			e.preventDefault()
 
     			if (this.isMoblie) e = e.targetTouches[0]
     			this.setValueOnPos(this.getPos(e), true)
     		},
-    		moveEnd(e) {
+    		moveEnd: function(e) {
     			if (this.flag) {
     				this.$emit('drag-end', this)
     				if (this.lazy && this.isDiff(this.val, this.value)) {
@@ -475,7 +475,7 @@
     			this.flag = false
     			this.setPosition()
     		},
-    		setValueOnPos(pos, isDrag) {
+    		setValueOnPos: function(pos, isDrag) {
     			let range = this.isRange ? this.limit[this.currentSlider] : this.limit
     			let valueRange = this.isRange ? this.valueLimit[this.currentSlider] : this.valueLimit
     			if (pos >= range[0] && pos <= range[1]) {
@@ -494,7 +494,7 @@
     				if (this.currentSlider === 0) this.currentSlider = 1
     			}
     		},
-    		isDiff(a, b) {
+    		isDiff: function(a, b) {
     			if (Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)) {
     				return true
     			}
@@ -503,7 +503,7 @@
     			}
     			return a !== b
     		},
-    		setCurrentValue(val, bool) {
+    		setCurrentValue: function(val, bool) {
     			if (val < this.minimum || val > this.maximum) return false
     			if (this.isRange) {
     				if (this.isDiff(this.currentValue[this.currentSlider], val)) {
@@ -521,7 +521,7 @@
     			}
     			bool || this.setPosition()
     		},
-    		setIndex(val) {
+    		setIndex: function(val) {
     			if (Array.isArray(val) && this.isRange) {
     				let value
     				if (this.data) {
@@ -540,7 +540,7 @@
     				this.setCurrentValue(val)
     			}
     		},
-    		setValue(val, speed, isInit) {
+    		setValue: function(val, speed, isInit) {
     			if (this.isDiff(this.val, val)) {
     				this.val = val
     				!isInit && this.syncValue()
@@ -550,7 +550,7 @@
   			     this.setPosition(speed)
     			})
     		},
-    		setPosition(speed) {
+    		setPosition: function(speed) {
     			this.flag || this.setTransitionTime(speed === undefined ? this.speed : speed)
     			if (this.isRange) {
     				this.currentSlider = 0
@@ -563,7 +563,7 @@
     			}
     			this.flag || this.setTransitionTime(0)
     		},
-    		setTransform(val) {
+    		setTransform: function(val) {
     			let value = (this.direction === 'vertical' ? ((this.dotSize / 2) - val) : (val - (this.dotSize / 2))) * (this.reverse ? -1 : 1)
     			let translateValue = this.direction === 'vertical' ? `translateY(${value}px)` : `translateX(${value}px)`
     			let processSize = `${this.currentSlider === 0 ? this.position[1] - val : val - this.position[0]}px`
@@ -595,7 +595,7 @@
     				}
     			}
     		},
-    		setTransitionTime(time) {
+    		setTransitionTime: function(time) {
     			time || this.$els.process.offsetWidth
     			if (this.isRange) {
     				for (let i = 0; i < this.slider.length; i++) {
@@ -612,33 +612,33 @@
     				this.$els.process.style.WebkitTransitionDuration = `${time}s`
     			}
     		},
-    		syncValue() {
+    		syncValue: function() {
     			this.$emit('callback', this.val)
     			this.$emit('input', this.isRange ? this.val.slice() : this.val)
     		},
-    		getValue() {
+    		getValue: function() {
     			return this.val
     		},
-    		getIndex() {
+    		getIndex: function() {
     			return this.currentIndex
     		},
-    		getStaticData() {
+    		getStaticData: function() {
     			if (this.$els.elem) {
     				this.size = this.direction === 'vertical' ? this.$els.elem.offsetHeight : this.$els.elem.offsetWidth
     				this.offset = this.direction === 'vertical' ? (this.$els.elem.getBoundingClientRect().top + window.pageYOffset || document.documentElement.scrollTop) : this.$els.elem.getBoundingClientRect().left
     			}
     		},
-    		refresh() {
+    		refresh: function() {
     			if (this.$els.elem) {
     				this.getStaticData()
     				this.setPosition()
     			}
     		}
     	},
-    	created() {
+    	created: function() {
     		window.addEventListener('resize', this.refresh)
     	},
-    	ready() {
+    	ready: function() {
         var self = this;
     		this.$nextTick(function(){
           self.getStaticData()
@@ -646,7 +646,7 @@
           self.bindEvents()
     		})
     	},
-    	destroyed() {
+    	destroyed: function() {
     		this.unbindEvents()
     	}
     });
