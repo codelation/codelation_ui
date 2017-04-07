@@ -156,7 +156,7 @@
     		flowDirection: function() {
     			return 'vue-slider-' + this.direction + (this.reverse ? '-reverse' : '');
     		},
-    		tooltipDirection() {
+    		tooltipDirection: function() {
     			let dir = this.tooltipDir || (this.direction === 'vertical' ? 'left' : 'top')
     			if (Array.isArray(dir)) {
     				return this.isRange ? dir : dir[1]
