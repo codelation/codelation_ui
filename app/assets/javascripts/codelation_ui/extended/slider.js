@@ -154,7 +154,7 @@
     	},
     	computed: {
     		flowDirection: function() {
-    			return `vue-slider-${this.direction + (this.reverse ? '-reverse' : '')}`
+    			return 'vue-slider-' + this.direction + (this.reverse ? '-reverse' : '');
     		},
     		tooltipDirection() {
     			let dir = this.tooltipDir || (this.direction === 'vertical' ? 'left' : 'top')
@@ -166,10 +166,10 @@
     			}
     		},
     		tooltipStatus: function() {
-    			return this.tooltip === 'hover' && this.flag ? 'vue-slider-always' : this.tooltip ? `vue-slider-${this.tooltip}` : ''
+    			return this.tooltip === 'hover' && this.flag ? 'vue-slider-always' : this.tooltip ? 'vue-slider-' + this.tooltip : ''
     		},
     		tooltipClass: function() {
-    			return [`vue-slider-tooltip-${this.tooltipDirection}`, 'vue-slider-tooltip']
+    			return ['vue-slider-tooltip-' + this.tooltipDirection, 'vue-slider-tooltip']
     		},
     		isMoblie: function() {
     			return this.eventType === 'touch' || this.eventType !== 'mouse' && /(iPhone|iPad|iPod|iOS|Android|SymbianOS|Windows Phone|Mobile)/i.test(navigator.userAgent)
@@ -263,11 +263,11 @@
     		},
     		wrapStyles: function() {
     			return this.direction === 'vertical' ? {
-    				height: typeof this.height === 'number' ? `${this.height}px` : this.height,
-    				padding: `${this.dotSize / 2}px`
+    				height: typeof this.height === 'number' ? this.height + 'px' : this.height,
+    				padding: (this.dotSize / 2) + 'px'
     			} : {
-    				width: typeof this.width === 'number' ? `${this.width}px` : this.width,
-    				padding: `${this.dotSize / 2}px`
+    				width: typeof this.width === 'number' ? this.width + 'px' : this.width,
+    				padding: (this.dotSize / 2) + 'px'
     			}
     		},
     		sliderStyles: function() {
@@ -288,30 +288,30 @@
     		},
     		elemStyles: function() {
     			return this.direction === 'vertical' ? {
-    				width: `${this.width}px`,
+    				width: this.width + 'px',
     				height: '100%'
     			} : {
-    				height: `${this.height}px`
+    				height: this.height + 'px'
     			}
     		},
     		dotStyles: function() {
     			return this.direction === 'vertical' ? {
-    				width: `${this.dotSize}px`,
-    				height: `${this.dotSize}px`,
-    				left: `${(-(this.dotSize - this.width) / 2)}px`
+    				width: this.dotSize + 'px',
+    				height: this.dotSize + 'px',
+    				left: (-(this.dotSize - this.width) / 2) + 'px'
     			} : {
-    				width: `${this.dotSize}px`,
-    				height: `${this.dotSize}px`,
-    				top: `${(-(this.dotSize - this.height) / 2)}px`
+    				width: this.dotSize + 'px',
+    				height: this.dotSize + 'px',
+    				top: (-(this.dotSize - this.height) / 2) + 'px'
     			}
     		},
     		piecewiseDotStyle: function() {
     			return this.direction === 'vertical' ? {
-    				width: `${this.width}px`,
-    				height: `${this.width}px`
+    				width: this.width + 'px',
+    				height: this.width + 'px'
     			} : {
-    				width: `${this.height}px`,
-    				height: `${this.height}px`
+    				width: this.height + 'px',
+    				height: this.height + 'px'
     			}
     		},
     		piecewiseDotWrap: function() {
@@ -323,10 +323,10 @@
     			let gap = (this.size - (this.direction === 'vertical' ? this.width : this.height)) / this.total
     			for (let i = 0; i <= this.total; i++) {
     				let style = this.direction === 'vertical' ? {
-    					bottom: `${this.gap * i - this.width / 2}px`,
+    					bottom: (this.gap * i - this.width / 2) + 'px',
     					left: '200px'
     				} : {
-    					left: `${this.gap * i - this.height / 2}px`,
+    					left: (this.gap * i - this.height / 2) + 'px',
     					top: '0'
     				}
     				let index = this.reverse ? (this.total - i) : i
@@ -565,9 +565,9 @@
     		},
     		setTransform: function(val) {
     			let value = (this.direction === 'vertical' ? ((this.dotSize / 2) - val) : (val - (this.dotSize / 2))) * (this.reverse ? -1 : 1)
-    			let translateValue = this.direction === 'vertical' ? `translateY(${value}px)` : `translateX(${value}px)`
-    			let processSize = `${this.currentSlider === 0 ? this.position[1] - val : val - this.position[0]}px`
-    			let processPos = `${this.currentSlider === 0 ? val : this.position[0]}px`
+    			let translateValue = this.direction === 'vertical' ? 'translateY(' + value + 'px)' : 'translateX(' + value + 'px)'
+    			let processSize = (this.currentSlider === 0 ? this.position[1] - val : val - this.position[0]) + 'px'
+    			let processPos = (this.currentSlider === 0 ? val : this.position[0]) + 'px'
     			if (this.isRange) {
     				this.slider[this.currentSlider].style.transform = translateValue
     				this.slider[this.currentSlider].style.WebkitTransform = translateValue
@@ -586,11 +586,11 @@
     				this.slider.style.WebkitTransform = translateValue
     				this.slider.style.msTransform = translateValue
     				if (this.direction === 'vertical') {
-    					this.$els.process.style.height = `${val}px`
+    					this.$els.process.style.height = val + 'px'
     					this.$els.process.style[this.reverse ? 'top' : 'bottom'] = 0
     				}
     				else {
-    					this.$els.process.style.width = `${val}px`
+    					this.$els.process.style.width = val + 'px'
     					this.$els.process.style[this.reverse ? 'right' : 'left'] = 0
     				}
     			}
@@ -599,17 +599,17 @@
     			time || this.$els.process.offsetWidth
     			if (this.isRange) {
     				for (let i = 0; i < this.slider.length; i++) {
-    					this.slider[i].style.transitionDuration = `${time}s`
-    					this.slider[i].style.WebkitTransitionDuration = `${time}s`
+    					this.slider[i].style.transitionDuration = time + 's'
+    					this.slider[i].style.WebkitTransitionDuration = time + 's'
     				}
-    				this.$els.process.style.transitionDuration = `${time}s`
-    				this.$els.process.style.WebkitTransitionDuration = `${time}s`
+    				this.$els.process.style.transitionDuration = time + 's'
+    				this.$els.process.style.WebkitTransitionDuration = time + 's'
     			}
     			else {
-    				this.slider.style.transitionDuration = `${time}s`
-    				this.slider.style.WebkitTransitionDuration = `${time}s`
-    				this.$els.process.style.transitionDuration = `${time}s`
-    				this.$els.process.style.WebkitTransitionDuration = `${time}s`
+    				this.slider.style.transitionDuration = time + 's'
+    				this.slider.style.WebkitTransitionDuration = time + 's'
+    				this.$els.process.style.transitionDuration = time + 's'
+    				this.$els.process.style.WebkitTransitionDuration = time + 's'
     			}
     		},
     		syncValue: function() {
