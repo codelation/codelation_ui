@@ -11,11 +11,10 @@
     
     // All vue components inherit this.  Used to show the vue page after the js loads
     Vue.mixin({
-      mixins: [App.vue.interfaces.contentFormatters, App.vue.interfaces.custom],
+      mixins: [App.vue.interfaces.contentFormatters, App.vue.interfaces.string, App.vue.interfaces.custom],
       methods: {
         _numeral: numeral,
-        _moment: moment,
-        _pluralize: pluralize
+        _moment: moment
       }
     });
   });
