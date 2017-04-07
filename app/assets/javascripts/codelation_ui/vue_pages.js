@@ -13,9 +13,9 @@
     Vue.mixin({
       mixins: [App.vue.interfaces.contentFormatters, App.vue.interfaces.custom],
       methods: {
-        numeral: numeral,
-        moment: moment,
-        pluralize: pluralize
+        _numeral: numeral,
+        _moment: moment,
+        _pluralize: pluralize
       }
     });
   });
