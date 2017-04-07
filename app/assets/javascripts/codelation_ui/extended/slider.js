@@ -157,7 +157,7 @@
     			return 'vue-slider-' + this.direction + (this.reverse ? '-reverse' : '');
     		},
     		tooltipDirection: function() {
-    			let dir = this.tooltipDir || (this.direction === 'vertical' ? 'left' : 'top')
+    			var dir = this.tooltipDir || (this.direction === 'vertical' ? 'left' : 'top')
     			if (Array.isArray(dir)) {
     				return this.isRange ? dir : dir[1]
     			}
@@ -196,14 +196,14 @@
     			set: function(val) {
     				if (this.data) {
     					if (this.isRange) {
-    						let index0 = this.data.indexOf(val[0])
-    						let index1 = this.data.indexOf(val[1])
+    						var index0 = this.data.indexOf(val[0])
+    						var index1 = this.data.indexOf(val[1])
     						if (index0 > -1 && index1 > -1) {
     							this.currentValue = [index0, index1]
     						}
     					}
     					else {
-    						let index = this.data.indexOf(val)
+    						var index = this.data.indexOf(val)
     						if (index > -1) {
     							this.currentValue = index
     						}
@@ -234,7 +234,7 @@
     			return this.data ? (this.data.length - 1) : this.max
     		},
     		multiple: function() {
-    			let decimals = `${this.interval}`.split('.')[1]
+    			var decimals = this.interval.toString().split('.')[1]
     			return decimals ? Math.pow(10, decimals.length) : 1
     		},
     		spacing: function() {
@@ -319,20 +319,20 @@
     				return false
     			}
 
-    			let arr = []
-    			let gap = (this.size - (this.direction === 'vertical' ? this.width : this.height)) / this.total
-    			for (let i = 0; i <= this.total; i++) {
-    				let style = this.direction === 'vertical' ? {
+    			var arr = []
+    			var gap = (this.size - (this.direction === 'vertical' ? this.width : this.height)) / this.total
+    			for (var i = 0; i <= this.total; i++) {
+    				var style = this.direction === 'vertical' ? {
     					bottom: (this.gap * i - this.width / 2) + 'px',
     					left: '200px'
     				} : {
     					left: (this.gap * i - this.height / 2) + 'px',
     					top: '0'
     				}
-    				let index = this.reverse ? (this.total - i) : i
-    				let label = this.data ? this.data[index] : (this.spacing * index) + this.min
+    				var index = this.reverse ? (this.total - i) : i
+    				var label = this.data ? this.data[index] : (this.spacing * index) + this.min
     				arr.push({
-    					style,
+    					style: style,
     					label: this.formatter ? this.formatting(label) : label,
     					inRange: index >= this.indexRange[0] && index <= this.indexRange[1]
     				})
@@ -352,8 +352,8 @@
     				this.refresh()
     			}
     			else if (this.isRange) {
-    				let bool
-    				val = this.val.map((v) => {
+    				var bool
+    				val = this.val.map(function(v) {
     					if (v > val) {
     						bool = true
     						return val
@@ -373,8 +373,8 @@
     				this.refresh()
     			}
     			else if (this.isRange) {
-    				let bool
-    				val = this.val.map((v) => {
+    				var bool
+    				val = this.val.map(function(v) {
     					if (v < val) {
     						bool = true
     						return val
@@ -391,7 +391,7 @@
     		},
     		show: function(bool) {
     			if (bool && !this.size) {
-    				this.$nextTick(() => {
+    				this.$nextTick(function() {
     					this.refresh()
     				})
     			}
@@ -441,7 +441,7 @@
     		},
     		wrapClick: function(e) {
     			if (this.isDisabled || !this.clickable) return false
-    			let pos = this.getPos(e)
+    			var pos = this.getPos(e)
     			if (this.isRange) {
     				this.currentSlider = pos > ((this.position[1] - this.position[0]) / 2 + this.position[0]) ? 1 : 0
     			}
@@ -476,11 +476,11 @@
     			this.setPosition()
     		},
     		setValueOnPos: function(pos, isDrag) {
-    			let range = this.isRange ? this.limit[this.currentSlider] : this.limit
-    			let valueRange = this.isRange ? this.valueLimit[this.currentSlider] : this.valueLimit
+    			var range = this.isRange ? this.limit[this.currentSlider] : this.limit
+    			var valueRange = this.isRange ? this.valueLimit[this.currentSlider] : this.valueLimit
     			if (pos >= range[0] && pos <= range[1]) {
     				this.setTransform(pos)
-    				let v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
+    				var v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
     				this.setCurrentValue(v, isDrag)
     			}
     			else if (pos < range[0]) {
@@ -499,7 +499,7 @@
     				return true
     			}
     			else if (Array.isArray(a) && a.length === b.length) {
-    				return a.some((v, i) => v !== b[i])
+    				return a.some(function(v, i) {return v !== b[i]})
     			}
     			return a !== b
     		},
@@ -523,7 +523,7 @@
     		},
     		setIndex: function(val) {
     			if (Array.isArray(val) && this.isRange) {
-    				let value
+    				var value
     				if (this.data) {
     					value = [this.data[val[0]], this.data[val[1]]]
     				}
@@ -546,7 +546,7 @@
     				!isInit && this.syncValue()
     			}
 
-    			this.$nextTick(() => {
+    			this.$nextTick(function() {
   			     this.setPosition(speed)
     			})
     		},
@@ -564,10 +564,10 @@
     			this.flag || this.setTransitionTime(0)
     		},
     		setTransform: function(val) {
-    			let value = (this.direction === 'vertical' ? ((this.dotSize / 2) - val) : (val - (this.dotSize / 2))) * (this.reverse ? -1 : 1)
-    			let translateValue = this.direction === 'vertical' ? 'translateY(' + value + 'px)' : 'translateX(' + value + 'px)'
-    			let processSize = (this.currentSlider === 0 ? this.position[1] - val : val - this.position[0]) + 'px'
-    			let processPos = (this.currentSlider === 0 ? val : this.position[0]) + 'px'
+    			var value = (this.direction === 'vertical' ? ((this.dotSize / 2) - val) : (val - (this.dotSize / 2))) * (this.reverse ? -1 : 1)
+    			var translateValue = this.direction === 'vertical' ? 'translateY(' + value + 'px)' : 'translateX(' + value + 'px)'
+    			var processSize = (this.currentSlider === 0 ? this.position[1] - val : val - this.position[0]) + 'px'
+    			var processPos = (this.currentSlider === 0 ? val : this.position[0]) + 'px'
     			if (this.isRange) {
     				this.slider[this.currentSlider].style.transform = translateValue
     				this.slider[this.currentSlider].style.WebkitTransform = translateValue
@@ -598,7 +598,7 @@
     		setTransitionTime: function(time) {
     			time || this.$els.process.offsetWidth
     			if (this.isRange) {
-    				for (let i = 0; i < this.slider.length; i++) {
+    				for (var i = 0; i < this.slider.length; i++) {
     					this.slider[i].style.transitionDuration = time + 's'
     					this.slider[i].style.WebkitTransitionDuration = time + 's'
     				}
