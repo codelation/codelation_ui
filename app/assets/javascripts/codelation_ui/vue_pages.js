@@ -14,7 +14,8 @@
       mixins: [App.vue.interfaces.contentFormatters, App.vue.interfaces.custom],
       methods: {
         numeral: numeral,
-        moment: moment
+        moment: moment,
+        pluralize: pluralize
       }
     });
   });
