@@ -1,1 +1,1 @@
-//= require ./extended/**/*
+//= require_tree ./extended
