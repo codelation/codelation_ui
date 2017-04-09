@@ -1,1 +1,1 @@
-//= require ./extended/slider
+//= require ./extended/**/*
