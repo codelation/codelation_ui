@@ -1,4 +1,18 @@
-// Your code goes here
+// # Props
+
+// Name | Default value | Description
+// ---|:---:|---
+// `diameter` | `200` | Diameter of the progress bar circle in pixels.
+// `totalSteps` | `10` | Total number of steps to complete progress bar.
+// `completedSteps` | `0` | Number of completed steps in the progress bar.
+// `startColor` | `#bbff42` | The color of the leading edge of the progress bar gradient.
+// `stopColor` | `#429321` | The secondary color of the progress bar gradient.
+// `innerStrokeColor` | `#323232` | Background color of the progress bar.
+// `strokeWidth` | `10` | The width of the progress bar.
+// `animateSpeed` | `1000` | The amount of time in milliseconds to animate one step.
+// `fps` | `60` | The frames per second that the animation should run.
+// `timingFunc` | `linear` | The transition timing function to use for the CSS transition. See [transition-timing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function).
+
 
 (function(){
   "use strict"
