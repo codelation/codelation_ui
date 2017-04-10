@@ -22,7 +22,7 @@
   "use strict"
   
   App.register('component').enter(function(){
-    var template = '<div class="vue-radial-progress-bar-container" :style="containerStyle">\
+    var template = '<div class="vue-radial-progress-bar-container" :class="[over ? \'vue-radial-progress-bar-over\' : \'\', complete ? \'vue-radial-progress-bar-complete\' : \'\']" :style="containerStyle">\
                       <div class="vue-radial-progress-bar-inner" :style="innerCircleStyle">\
                         <slot></slot>\
                       </div>\
@@ -117,6 +117,20 @@
         }
       },
       computed: {
+        over: function() {
+          if (this.completedSteps > this.totalSteps) {
+           return true; 
+          }
+          
+          return false;
+        },
+        complete: function() {
+          if (this.completedSteps === this.totalSteps) {
+           return true; 
+          }
+          
+          return false;
+        },
         radius: function() {
           return this.diameter / 2
         },
