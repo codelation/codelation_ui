@@ -19,7 +19,7 @@
 }
 
 .v-fade-out-leave,
-.v-fade-in-out-enter {
+.v-fade-in-out-leave {
   @include transform(scale(.99));
   opacity: 0;
 }
