@@ -22,11 +22,11 @@
   "use strict"
   
   App.register('component').enter(function(){
-    var template = '<div class="radial-progress-container" :style="containerStyle">\
-                      <div class="radial-progress-inner" :style="innerCircleStyle">\
+    var template = '<div class="vue-radial-progress-bar-container" :style="containerStyle">\
+                      <div class="vue-radial-progress-bar-inner" :style="innerCircleStyle">\
                         <slot></slot>\
                       </div>\
-                      <svg class="radial-progress-bar"\
+                      <svg class="vue-radial-progress-bar-bar"\
                            :width="diameter"\
                            :height="diameter"\
                            version="1.1"\
@@ -38,15 +38,14 @@
                                           :cx="gradient.cx"\
                                           :cy="gradient.cy"\
                                           :r="gradient.r">\
-                            <stop offset="30%" :stop-color="startColor"/>\
-                            <stop offset="100%" :stop-color="stopColor"/>\
+                            <stop class="vue-radial-progress-bar-start-color" offset="30%"/>\
+                            <stop vue-radial-progress-bar-stop-color" offset="100%"/>\
                           </radialGradient>\
                         </defs>\
-                        <circle :r="innerCircleRadius"\
+                        <circle class="vue-radial-progress-bar-circle" :r="innerCircleRadius"\
                                 :cx="radius"\
                                 :cy="radius"\
                                 fill="transparent"\
-                                :stroke="innerStrokeColor"\
                                 :stroke-dasharray="circumference"\
                                 stroke-dashoffset="0"\
                                 stroke-linecap="round"\
@@ -82,16 +81,6 @@
           required: true,
           default: 0
         },
-        startColor: {
-          type: String,
-          required: false,
-          default: '#bbff42'
-        },
-        stopColor: {
-          type: String,
-          required: false,
-          default: '#429321'
-        },
         strokeWidth: {
           type: Number,
           required: false,
@@ -101,11 +90,6 @@
           type: Number,
           required: false,
           default: 1000
-        },
-        innerStrokeColor: {
-          type: String,
-          required: false,
-          default: '#323232'
         },
         fps: {
           type: Number,
@@ -167,7 +151,7 @@
           return 1000 / this.fps
         },
         hasGradient: function() {
-          return this.startColor !== this.stopColor
+          return true;
         },
         containerStyle: function() {
           return {
