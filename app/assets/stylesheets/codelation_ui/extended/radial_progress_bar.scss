@@ -1,7 +1,12 @@
-.radial-progress-container {
+$vue-radial-progress-bar-color: $default-ui-color !default;
+$vue-radial-progress-bar-start-color: $vue-radial-progress-bar-color !default;
+$vue-radial-progress-bar-end-color: $vue-radial-progress-bar-color !default;
+$vue-radial-progress-bar-track-color: #333333 !default;
+
+.vue-radial-progress-bar-container {
   position: relative;
   
-  .radial-progress-inner {
+  .vue-radial-progress-bar-inner {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     border-radius: 50%;
@@ -10,5 +15,17 @@
     @include flex-direction(column);
     @include align-items(center);
     @include justify-content(center);
+  }
+  
+  .vue-radial-progress-bar-start-color {
+    stop-color: $vue-radial-progress-bar-start-color;
+  }
+  
+  .vue-radial-progress-bar-stop-color {
+    stop-color: $vue-radial-progress-bar-stop-color;
+  }
+  
+  .vue-radial-progress-bar-circle {
+    stroke: $vue-radial-progress-bar-track-color;
   }
 }
