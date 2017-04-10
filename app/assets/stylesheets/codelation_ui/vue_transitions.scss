@@ -1,10 +1,66 @@
-.v-fade-in-out-transition {
+//v-fade-out
+//v-fade-in
+//v-fade-in-out
+//v-bounce-out
+//v-bounce-in
+//v-bounce-in-out-out
+
+.v-fade-in-transition,
+.v-fade-out-transition,
+.v-fade-in-out-transition{
   @include transition(all, .3s);
   opacity: 1;
+}
 
-  &.v-fade-in-out-leave,
-  &.v-fade-in-out-enter {
-    @include transform(scale(.99));
-    opacity: 0;
+.v-fade-in-enter,
+.v-fade-in-out-enter {
+  @include transform(scale(.99));
+  opacity: 0;
+}
+
+.v-fade-out-leave,
+.v-fade-in-out-enter {
+  @include transform(scale(.99));
+  opacity: 0;
+}
+
+.v-bounce-out-transition,
+.v-bounce-in-transition,
+.v-bounce-in-out-transition {
+  display: inline-block; /* otherwise scale animation won't work */
+}
+
+.v-bounce-out-leave,
+.v-bounce-in-out-enter {
+  @include animation(bounce-out .5s);
+}
+
+.v-bounce-in-enter,
+.v-bounce-in-out-enter {
+  @include animation(bounce-in .5s);
+}
+
+
+@keyframes bounce-out {
+  0% {
+    @include transform(scale(1));
+  }
+  50% {
+    @include transform(scale(1.3));
+  }
+  100% {
+    @include transform(scale(0));
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    @include transform(scale(0));
+  }
+  50% {
+    @include transform(scale(1.3));
+  }
+  100% {
+    @include transform(scale(1));
   }
 }
