@@ -1,3 +1,7 @@
+// # Use
+
+// <vue-radial-progress-bar :total-steps="10" :completed-steps="5"><h4>Inner content</h4></vue-radial-progress-bar>
+
 // # Props
 
 // Name | Default value | Description
