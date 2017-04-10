@@ -1,0 +1,50 @@
+$vue-fail-color: $red;
+$curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
+
+.vue-fail {
+  border-radius: 50%;
+  display: block;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px $vue-fail-color;
+  @include animation(vue-fail-fill .4s ease-in-out .4s forwards, vue-fail-scale .3s ease-in-out .9s both);
+
+  .vue-fail-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-miterlimit: 10;
+    stroke: $vue-fail-color;
+    fill: none;
+    @include animation(vue-fail-stroke .6s $curve forwards);
+  }
+
+  .vue-fail-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    @include animation(vue-fail-stroke .3s $curve .8s forwards);
+  }
+}
+
+
+@keyframes vue-fail-stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes vue-fail-scale {
+  0%, 100% {
+    @include transform(none);
+  }
+  50% {
+    @include transform(scale3d(1.1, 1.1, 1));
+  }
+}
+
+@keyframes vue-fail-fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px $vue-fail-color;
+  }
+}
