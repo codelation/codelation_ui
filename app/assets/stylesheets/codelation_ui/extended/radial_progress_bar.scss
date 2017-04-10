@@ -1,7 +1,18 @@
 $vue-radial-progress-bar-color: $default-ui-color !default;
 $vue-radial-progress-bar-start-color: $vue-radial-progress-bar-color !default;
 $vue-radial-progress-bar-stop-color: $vue-radial-progress-bar-color !default;
+
+$vue-radial-progress-bar-complete-color: $default-ui-color !default;
+$vue-radial-progress-bar-complete-start-color: $vue-radial-progress-bar-complete-color !default;
+$vue-radial-progress-bar-complete-stop-color: $vue-radial-progress-bar-complete-color !default;
+
+$vue-radial-progress-bar-over-color: #ee3128 !default;
+$vue-radial-progress-bar-over-start-color: $vue-radial-progress-bar-over-color !default;
+$vue-radial-progress-bar-over-stop-color: $vue-radial-progress-bar-over-color !default;
+
 $vue-radial-progress-bar-track-color: #ececec !default;
+$vue-radial-progress-bar-complete-track-color: #ececec !default;
+$vue-radial-progress-bar-over-track-color: #ececec !default;
 
 .vue-radial-progress-bar-container {
   position: relative;
@@ -27,5 +38,33 @@ $vue-radial-progress-bar-track-color: #ececec !default;
   
   .vue-radial-progress-bar-circle {
     stroke: $vue-radial-progress-bar-track-color;
+  }
+  
+  &.vue-radial-progress-bar-complete {
+    .vue-radial-progress-bar-start-color {
+      stop-color: $vue-radial-progress-bar-complete-start-color;
+    }
+
+    .vue-radial-progress-bar-stop-color {
+      stop-color: $vue-radial-progress-bar-complete-stop-color;
+    }
+
+    .vue-radial-progress-bar-circle {
+      stroke: $vue-radial-progress-bar-complete-track-color;
+    }
+  }
+  
+   &.vue-radial-progress-bar-over {
+    .vue-radial-progress-bar-start-color {
+      stop-color: $vue-radial-progress-bar-over-start-color;
+    }
+
+    .vue-radial-progress-bar-stop-color {
+      stop-color: $vue-radial-progress-bar-over-stop-color;
+    }
+
+    .vue-radial-progress-bar-circle {
+      stroke: $vue-radial-progress-bar-over-track-color;
+    }
   }
 }
