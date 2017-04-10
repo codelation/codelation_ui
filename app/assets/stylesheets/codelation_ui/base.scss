@@ -4,11 +4,7 @@
 // Used to set the max-width with the outer-container mixin
 $max-width: 1024px !default;
 
-@if variable-exists(accent-color) {
-  $default-ui-color: $accent-color !default;
-}@else{
-  $default-ui-color: #0366d6 !default;
-}
+$default-ui-color: #0366d6 !default;
 
 
 // Used for has-cards, has-columns, and has-grid mixins. When the
