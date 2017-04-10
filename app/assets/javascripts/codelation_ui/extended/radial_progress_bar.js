@@ -183,21 +183,21 @@
       },
       methods: {
         getStopPointsOfCircle: function(steps) {
-          const points = []
+          var points = []
           for (var i = 0; i < steps; i++) {
-            const angle = this.circleSlice * i
+            var angle = this.circleSlice * i
             points.push(this.getPointOfCircle(angle))
           }
           return points
         },
         getPointOfCircle: function(angle) {
-          const radius = 0.5
-          const x = radius + (radius * Math.cos(angle))
-          const y = radius + (radius * Math.sin(angle))
+          var radius = 0.5
+          var x = radius + (radius * Math.cos(angle))
+          var y = radius + (radius * Math.sin(angle))
           return { x: x, y: y }
         },
         gotoPoint: function() {
-          const point = this.getPointOfCircle(this.currentAngle)
+          var point = this.getPointOfCircle(this.currentAngle)
           this.gradient.fx = point.x
           this.gradient.fy = point.y
         },
@@ -212,24 +212,25 @@
             this.gotoNextStep()
             return
           }
-          const angleOffset = (this.completedSteps - 1) * this.circleSlice
+          var angleOffset = (this.completedSteps - 1) * this.circleSlice
           var i = (this.currentAngle - angleOffset) / this.animateSlice
-          const incrementer = Math.abs(i - this.totalPoints) / this.totalPoints
-          const isMoveForward = i < this.totalPoints
+          var incrementer = Math.abs(i - this.totalPoints) / this.totalPoints
+          var isMoveForward = i < this.totalPoints
+          var self = this;
           this.gradientAnimation = setInterval(function() {
-            if (isMoveForward && i >= this.totalPoints ||
-                !isMoveForward && i < this.totalPoints) {
-              clearInterval(this.gradientAnimation)
-              return
+            if (isMoveForward && i >= self.totalPoints ||
+                !isMoveForward && i < self.totalPoints) {
+              clearInterval(self.gradientAnimation);
+              return;
             }
-            this.currentAngle = angleOffset + (this.animateSlice * i)
-            this.gotoPoint()
-            i += isMoveForward ? incrementer : -incrementer
-          }, this.animationIncrements)
+            self.currentAngle = angleOffset + (self.animateSlice * i);
+            self.gotoPoint();
+            i += isMoveForward ? incrementer : -incrementer;
+          }, self.animationIncrements)
         },
         gotoNextStep: function() {
           this.currentAngle = this.completedSteps * this.circleSlice
-          this.gotoPoint()
+          this.gotoPoint();
         }
       },
       watch: {
