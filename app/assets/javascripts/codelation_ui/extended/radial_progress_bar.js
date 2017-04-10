@@ -39,7 +39,7 @@
                                           :cy="gradient.cy"\
                                           :r="gradient.r">\
                             <stop class="vue-radial-progress-bar-start-color" offset="30%"/>\
-                            <stop vue-radial-progress-bar-stop-color" offset="100%"/>\
+                            <stop class="vue-radial-progress-bar-stop-color" offset="100%"/>\
                           </radialGradient>\
                         </defs>\
                         <circle class="vue-radial-progress-bar-circle" :r="innerCircleRadius"\
