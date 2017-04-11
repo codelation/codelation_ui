@@ -35,8 +35,8 @@
 
   App.register('component').enter(function() {
   
-     App.vue.config.vueCode = {
-       dark: false 
+     App.vue.config.vue_code = {
+       'dark': false 
      }
     
     
