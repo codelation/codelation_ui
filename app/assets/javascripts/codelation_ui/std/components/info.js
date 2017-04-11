@@ -1,6 +1,3 @@
-// From: https://www.npmjs.com/package/vue-slider-component
-// Converted to support Vue 1.x on Rails asset pipeline
-
 (function() {
   "use strict";
 
