@@ -35,7 +35,7 @@
 
   App.register('component').enter(function() {
   
-     App.vue.config.vue_code = {
+     App.vue.config.code = {
        'dark': false 
      }
     
@@ -55,7 +55,7 @@
         },
         dark: {
           type: Boolean,
-          default: App.vue.config.vueCode.dark
+          default: App.vue.config.code.dark
         }
       },
       ready: function() {
