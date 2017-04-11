@@ -34,7 +34,12 @@
   "use strict";
 
   App.register('component').enter(function() {
-
+  
+     App.vue.config.vueCode = {
+       dark: false 
+     }
+    
+    
     var template = '<div class="vue-code" :class="[inline ? \'vue-code-inline\' : \'vue-code-block\', dark ? \'vue-code-dark\' : \'\']">\
                       <pre v-if="!inline"><code v-el:code :class="lang"><slot></slot></code></pre>\
                       <span v-else><code v-el:code :class="lang"><slot></slot></code></span>\
@@ -50,7 +55,7 @@
         },
         dark: {
           type: Boolean,
-          default: false
+          default: App.vue.config.vueCode.dark
         }
       },
       ready: function() {
