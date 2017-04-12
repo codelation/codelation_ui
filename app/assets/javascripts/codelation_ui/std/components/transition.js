@@ -9,7 +9,8 @@
       props: {
         transitionName: {
           type: String,
-          default: "v-fade-up",
+          default: "v-fade-up"
+        }
       },
       template: template,
       data: function() {
