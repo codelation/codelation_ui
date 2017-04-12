@@ -1,26 +1,41 @@
 //v-fade-out
 //v-fade-in
 //v-fade-in-out
+//v-appear
+//v-fade-up
 //v-bounce-out
 //v-bounce-in
 //v-bounce-in-out-out
 
+.v-fade-up-transition {
+  @include animation(v-fade-up .5s);
+}
+
 .v-fade-in-transition,
 .v-fade-out-transition,
+.v-appear-transition,
 .v-fade-in-out-transition{
   @include transition(all, .3s);
   opacity: 1;
 }
 
+.v-appear-enter {
+  @include transform(scale(.99));
+  opacity: 0;
+}
+
+.v-appear-leave {
+  @include transform(scale(.99));
+  opacity: 0;
+}
+
 .v-fade-in-enter,
 .v-fade-in-out-enter {
-  @include transform(scale(.99));
   opacity: 0;
 }
 
 .v-fade-out-leave,
 .v-fade-in-out-leave {
-  @include transform(scale(.99));
   opacity: 0;
 }
 
@@ -32,16 +47,16 @@
 
 .v-bounce-out-leave,
 .v-bounce-in-out-enter {
-  @include animation(bounce-out .5s);
+  @include animation(v-bounce-out .5s);
 }
 
 .v-bounce-in-enter,
 .v-bounce-in-out-enter {
-  @include animation(bounce-in .5s);
+  @include animation(v-bounce-in .5s);
 }
 
 
-@keyframes bounce-out {
+@keyframes v-bounce-out {
   0% {
     @include transform(scale(1));
   }
@@ -53,7 +68,7 @@
   }
 }
 
-@keyframes bounce-in {
+@keyframes v-bounce-in {
   0% {
     @include transform(scale(0));
   }
@@ -62,5 +77,18 @@
   }
   100% {
     @include transform(scale(1));
+  }
+}
+
+
+@keyframes v-fade-up {
+  from {
+    opacity: 0;
+    @include transform(translate3d(0, 20px, 0));
+  }
+
+  to {
+    opacity: 1;
+    @include transform(none);
   }
 }
