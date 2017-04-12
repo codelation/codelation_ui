@@ -3,7 +3,7 @@
 
   App.register('component').enter(function() {
 
-    var template = '<div v-if="pageTransitionFinished" transition="v-page-load"><slot></slot></div>';
+    var template = '<div v-if="pageTransitionFinished" :transition="transitionName"><slot></slot></div>';
 
     Vue.component('vue-transition', {
       props: {
