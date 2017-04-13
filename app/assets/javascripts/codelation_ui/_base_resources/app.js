@@ -2,14 +2,19 @@
   "use strict";
 
   var app = window.App;
-  var bodyClass, bodyElement;
+  var bodyClass,
+    bodyElement;
 
   if (app === undefined) {
     app = window.App = {};
   }
 
-  app.enterFunctions = { component: [] };
-  app.exitFunctions  = { component: [] };
+  app.enterFunctions = {
+    component: []
+  };
+  app.exitFunctions = {
+    component: []
+  };
 
   // Register functions to run when any page or specific pages are loaded.
   //
@@ -61,6 +66,7 @@
     bodyElement = $('body');
 
     // Determine which functions should be fired
+    var fireConfigFunctions = [];
     var fireFirstFunctions = [];
     var fireFunctions = [];
     var fireLastFunctions = [];
@@ -69,20 +75,33 @@
       if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
-      
+
       if (bodyClass === 'last') {
-       fireLastFunctions = fireLastFunctions.concat(functions); 
+        fireLastFunctions = fireLastFunctions.concat(functions);
       }
-      
+
       if (bodyClass === 'first') {
-       fireFirstFunctions = fireFirstFunctions.concat(functions); 
+        fireFirstFunctions = fireFirstFunctions.concat(functions);
+      }
+
+      if (bodyClass === 'config') {
+        fireConfigFunctions = fireConfigFunctions.concat(functions);
       }
     });
 
     // Fire off each function
-    $.each(fireFirstFunctions, function() { this.call(); });
-    $.each(fireFunctions, function() { this.call(); });
-    $.each(fireLastFunctions, function() { this.call(); });
+    $.each(fireConfigFunctions, function() {
+      this.call();
+    });
+    $.each(fireFirstFunctions, function() {
+      this.call();
+    });
+    $.each(fireFunctions, function() {
+      this.call();
+    });
+    $.each(fireLastFunctions, function() {
+      this.call();
+    });
   });
 
   // Fires off any callbacks registered for exit, ONLY if using Turbolinks.
@@ -90,26 +109,32 @@
     var fireFirstFunctions = [];
     var fireFunctions = [];
     var fireLastFunctions = [];
-    
+
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
       if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
-      
+
       if (bodyClass === 'last') {
-       fireLastFunctions = fireLastFunctions.concat(functions); 
+        fireLastFunctions = fireLastFunctions.concat(functions);
       }
-      
+
       if (bodyClass === 'first') {
-       fireFirstFunctions = fireFirstFunctions.concat(functions); 
+        fireFirstFunctions = fireFirstFunctions.concat(functions);
       }
     });
 
     // Fire off each function
-    $.each(fireFirstFunctions, function() { this.call(); });
-    $.each(fireFunctions, function() { this.call(); });
-    $.each(fireLastFunctions, function() { this.call(); });
+    $.each(fireFirstFunctions, function() {
+      this.call();
+    });
+    $.each(fireFunctions, function() {
+      this.call();
+    });
+    $.each(fireLastFunctions, function() {
+      this.call();
+    });
   });
 })();
