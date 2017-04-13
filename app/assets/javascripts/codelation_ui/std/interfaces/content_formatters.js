@@ -16,19 +16,19 @@
         if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || App.vue.config.contentFormatters.empty; 
         }
-        return this._numeral(value).format('$' + (custom_number_format || App.vue.config.contentFormatters.currency));
+        return App.vue.interfaces.number.methods._numeral(value).format('$' + (custom_number_format || App.vue.config.contentFormatters.currency));
       },
       _formatToPercent: function(value, custom_number_format, nullReturn) {
         if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || App.vue.config.contentFormatters.empty; 
         }
-        return this._numeral(value / 100).format((custom_number_format || App.vue.config.contentFormatters.percent) + '%');
+        return App.vue.interfaces.number.methods._numeral(value / 100).format((custom_number_format || App.vue.config.contentFormatters.percent) + '%');
       },
       _formatToNumber: function(value, custom_number_format, nullReturn) {
         if (value === undefined || value === null || isNaN(value)) {
          return nullReturn || App.vue.config.contentFormatters.empty; 
         }
-        return this._numeral(value).format(custom_number_format || App.vue.config.contentFormatters.number);
+        return App.vue.interfaces.number.methods._numeral(value).format(custom_number_format || App.vue.config.contentFormatters.number);
       },
       _formatToPhoneNumber: function(value, reg, nullReturn) {
         if (value === undefined || value === null) {
@@ -47,7 +47,7 @@
         if (value === undefined || value === null || !this._moment(value).isValid()) {
          return nullReturn || App.vue.config.contentFormatters.empty; 
         }
-        return this._moment(value).format(custom_format || App.vue.config.contentFormatters.date);
+        return App.vue.interfaces.date.methods._moment(value).format(custom_format || App.vue.config.contentFormatters.date);
       }
     }
   };
