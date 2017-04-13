@@ -33,35 +33,32 @@
 (function() {
   "use strict";
 
-  App.register('component').enter(function() {
-  
-     App.vue.config.code = {
-       'dark': false 
-     }
-    
-    
-    var template = '<div class="vue-code" :class="[inline ? \'vue-code-inline\' : \'vue-code-block\', dark ? \'vue-code-dark\' : \'\']">\
-                      <pre v-if="!inline"><code v-el:code :class="lang"><slot></slot></code></pre>\
-                      <span v-else><code v-el:code :class="lang"><slot></slot></code></span>\
-                    </div>';
+   App.vue.config.code = {
+     'dark': false 
+   }
 
-    Vue.component('vue-code', {
-      template: template,
-      props: {
-        lang: String,
-        inline: {
-          type: Boolean,
-          default: false
-        },
-        dark: {
-          type: Boolean,
-          default: App.vue.config.code.dark
-        }
+
+  var template = '<div class="vue-code" :class="[inline ? \'vue-code-inline\' : \'vue-code-block\', dark ? \'vue-code-dark\' : \'\']">\
+                    <pre v-if="!inline"><code v-el:code :class="lang"><slot></slot></code></pre>\
+                    <span v-else><code v-el:code :class="lang"><slot></slot></code></span>\
+                  </div>';
+
+  App.vue.components.vueCode = Vue.extend({
+    template: template,
+    props: {
+      lang: String,
+      inline: {
+        type: Boolean,
+        default: false
       },
-      ready: function() {
-        var code = this.$els.code;
-        hljs.highlightBlock(code);
+      dark: {
+        type: Boolean,
+        default: App.vue.config.code.dark
       }
-    });
+    },
+    ready: function() {
+      var code = this.$els.code;
+      hljs.highlightBlock(code);
+    }
   });
 })();
