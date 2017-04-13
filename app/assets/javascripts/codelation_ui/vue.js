@@ -3,15 +3,25 @@
 //= require ./std
 
 App.vue = {
-  interfaces: {},
-  computedInterfaces: {},
-  components: {},
+  _info: 'Contains object references to all functionality that the UI offers as well as the reference to the root vue component',
+  interfaces: {
+    _info: 'Used for containing mixins and methods used for vue'
+  },
+  computedInterfaces: {
+    _info: 'Same as interfaces except accepts arguments to alter the mixin before applying it to the component'
+  },
+  components: {
+    _info: 'Used to hold references to various vue components you may use or are not defined globaly'
+  },
   config: {
+    _info: 'Used to customize the functionality for some interfaces and components',
     main: {
       showInterfaces: true,
       includedInterfaces: []
     }
   },
   root: null,
-  extend: {}
+  extend: {
+    _info: 'Used to add components to the root vue component if not defined'
+  }
 }
