@@ -4,6 +4,7 @@
 
   App.vue.interfaces.number = {
     methods: {
+      _numeral: numeral,
       // checks if the denominator is zero and returns zero
       _safeDivide: function(num, den) {
         if (den === 0) {
