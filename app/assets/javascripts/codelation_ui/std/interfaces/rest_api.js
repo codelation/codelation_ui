@@ -28,9 +28,10 @@
 
     var options = options_arg || {};
     var defaultOptions = defaultOptions_arg || {};
-
+    
+    // Add options to default options (overwrites any default)
     Object.keys(options).forEach(function(key) {
-      queries.push(App.vue.interfaces.string.methods._underscore(key) + "=" + options[key]);
+      defaultOptions[key] = options[key];
     });
 
     Object.keys(defaultOptions).forEach(function(key) {
