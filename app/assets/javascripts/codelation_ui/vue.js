@@ -6,7 +6,12 @@ App.vue = {
   interfaces: {},
   computedInterfaces: {},
   components: {},
-  config: {},
+  config: {
+    main: {
+      showInterfaces: true,
+      includedInterfaces: []
+    }
+  },
   root: null,
   extend: {}
 }
