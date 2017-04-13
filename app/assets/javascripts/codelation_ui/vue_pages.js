@@ -2,10 +2,6 @@
   "use strict";
 
   App.register('first').enter(function() {
-
-
-    console.log(App.vue);
-
     // All vue components inherit this.  Used to show the vue page after the js loads
     Vue.mixin({
       mixins: App.vue.config.main.includedInterfaces,
@@ -16,7 +12,8 @@
   });
 
   App.register('last').enter(function() {
-
+    
+    // Outputs the vue object
     if (App.vue.config.main.showInterfaces) {
       console.warn("Loaded Vue")
       console.warn(App.vue);
@@ -34,7 +31,6 @@
       });
     }
   }).exit(function() {
-    App.vue.extend = {};
     App.vue.root = null;
   });
 })();
