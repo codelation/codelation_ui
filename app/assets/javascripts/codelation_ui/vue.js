@@ -10,6 +10,9 @@ App.vue = {
   computedInterfaces: {
     _info: 'Same as interfaces except accepts arguments to alter the mixin before applying it to the component'
   },
+  globalComponents: {
+    _info: 'Used to define all global components'
+  },
   components: {
     _info: 'Used to hold references to various vue components you may use or are not defined globaly'
   },
