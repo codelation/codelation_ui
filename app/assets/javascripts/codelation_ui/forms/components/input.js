@@ -136,7 +136,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       'integer': {mDec: '0', wEmpty: 'empty'}
     }
 
-    Vue.component('vue-input', {
+    App.vue.components.vueInput = Vue.extend({
       mixins: [App.vue.interfaces.formValidation, App.vue.interfaces.contentValidators, App.vue.interfaces.helpers],
       template: template,
       props: {
