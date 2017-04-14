@@ -60,7 +60,7 @@
         if (this.form.formValidationInputs < 1) {
           this._formValidationRespondToForm();
         }else{
-          this.$broadcast('_form-validation-validate-inputs', this.form.formValidationValidateCallback);
+          this.$broadcast('_form-validation-validate-inputs', this._formValidationValidateCallback);
         }
       }
     },
