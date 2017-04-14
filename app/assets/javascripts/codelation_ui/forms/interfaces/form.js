@@ -2,7 +2,7 @@
   "use strict";
 
   // Exposes method validateForm(success, fail)
-  App.vue.config.form {
+  App.vue.config.form = {
     disableValidation: false
   }
   
