@@ -2,69 +2,74 @@
   "use strict";
 
   // Exposes method validateForm(success, fail)
-
+  App.vue.config.form {
+    disableValidation: false
+  }
+  
   App.vue.interfaces.form = {
     data: function() {
       return {
-        _formValidationWatch: true,
-        _formValidationInputs: 0,
-        _formValidationResponded: 0,
-        _formValidationValid: true,
-        _formValidationValidAction: null,
-        _formValidationInvalidAction: null,
-        _formValidationErrorMessage: null,
-        _formValidationDeveloperMode: false
+        form: {
+          formValidationWatch: true,
+          formValidationInputs: 0,
+          formValidationResponded: 0,
+          formValidationValid: true,
+          formValidationValidAction: null,
+          formValidationInvalidAction: null,
+          formValidationErrorMessage: null,
+          formValidationDeveloperMode: false,
+        }
       }
     },
     ready: function() {
-      if (App.vue.config.disableVueFormValidations == true) {
-        this._formValidationDeveloperMode = true;
+      if (App.vue.config.form.disableValidation == true) {
+        this.form.formValidationDeveloperMode = true;
         console.error("VUE FORMS DEVELOPER MODE: Validations will not fail the form");
       }
     },
     methods: {
       _formValidationRespondToForm: function() {
-        if (this._formValidationWatch && this._formValidationResponded === this._formValidationInputs) {
-          if (this._formValidationValid && typeof this._formValidationValidAction === 'function') {
-            this._formValidationValidAction();
-          }else if (!this._formValidationValid && typeof this._formValidationInvalidAction === 'function') {
-            this._formValidationInvalidAction();
+        if (this.form.formValidationWatch && this.form.formValidationResponded === this.form.formValidationInputs) {
+          if (this.form.formValidationValid && typeof this.form.formValidationValidAction === 'function') {
+            this.form.formValidationValidAction();
+          }else if (!this.form.formValidationValid && typeof this.form.formValidationInvalidAction === 'function') {
+            this.form.formValidationInvalidAction();
           }
         }
       },
       _formValidationValidateCallback: function(valid) {
-        this._formValidationResponded++;
-        if (this._formValidationValid) {
-          this._formValidationValid = valid;
+        this.form.formValidationResponded++;
+        if (this.form.formValidationValid) {
+          this.form.formValidationValid = valid;
         }
         this._formValidationRespondToForm();
       },
       validateForm: function(successCB, failCB) {
-        if (this._formValidationDeveloperMode === true) {
+        if (this.form.formValidationDeveloperMode === true) {
           successCB();
           return;
         }
-        this._formValidationWatch = false;
-        this._formValidationErrorMessage = null;
-        this._formValidationResponded = 0;
-        this._formValidationValid = true;
-        this._formValidationValidAction = successCB || null;
-        this._formValidationInvalidAction = failCB || null;
-        this._formValidationWatch = true;
+        this.form.formValidationWatch = false;
+        this.form.formValidationErrorMessage = null;
+        this.form.formValidationResponded = 0;
+        this.form.formValidationValid = true;
+        this.form.formValidationValidAction = successCB || null;
+        this.form.formValidationInvalidAction = failCB || null;
+        this.form.formValidationWatch = true;
 
-        if (this._formValidationInputs < 1) {
+        if (this.form.formValidationInputs < 1) {
           this._formValidationRespondToForm();
         }else{
-          this.$broadcast('_form-validation-validate-inputs', this._formValidationValidateCallback);
+          this.$broadcast('_form-validation-validate-inputs', this.form.formValidationValidateCallback);
         }
       }
     },
     events: {
       '_form-validation-inputs-check-in': function() {
-        this._formValidationInputs++;
+        this.form.formValidationInputs++;
       },
       '_form-validation-inputs-check-out': function() {
-        this._formValidationInputs--;
+        this.form.formValidationInputs--;
       }
     }
   };
