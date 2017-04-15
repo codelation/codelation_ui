@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails", "5.0"
   s.add_dependency "turbolinks", "2.5"
   s.add_dependency "uglifier", "2.7"
+  s.add_dependendy "title"
   s.add_development_dependency "rake"
   s.add_development_dependency "uglifier", "~> 2.7"
 end
