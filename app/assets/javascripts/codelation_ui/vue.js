@@ -25,6 +25,6 @@ App.vue = {
   },
   root: null,
   extend: {
-    _info: 'Used to add components to the root vue component if not defined'
+    _info: 'Used to hold references to per page components and attach to the root component if you did not define one.'
   }
 }
