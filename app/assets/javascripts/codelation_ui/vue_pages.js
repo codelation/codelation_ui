@@ -31,6 +31,8 @@
       });
     }
   }).exit(function() {
+    App.vue.root.$destroy();
+    App.vue.extend = {};
     App.vue.root = null;
   });
 })();
