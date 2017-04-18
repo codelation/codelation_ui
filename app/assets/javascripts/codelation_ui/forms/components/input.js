@@ -71,8 +71,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
 
   var template = '<div class="vue-input" :class="[message ? \'has-message\' : \'\', disabled ? \'disabled\' : \'\', type]">\
                     <i v-if="inputIcon" v-on:click="activeObject()" class="vue-input-icon fa" :class="[inputIcon]"></i>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input v-model="inputValue" :placeholder="placeholder">\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-el:input v-model="inputValue" :placeholder="placeholder">\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-model="inputValue" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-model="inputValue" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input v-model="inputValue" :placeholder="placeholder">\
                     <input :disabled="disabled" id="{{ id}}" type="checkbox" name="{{ name }}" v-if="showInputFor(\'bool\')" v-el:input v-model="inputValue">\
                     <input :disabled="disabled" id="{{ id}}" type="radio" name="{{ name }}" v-if="showInputFor(\'radio\')" v-el:input v-model="inputValue">\
@@ -89,50 +89,68 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                   </div>'
 
   var inputTypeMap = {
-    'money':'money',
-    'currency':'money',
-    'number':'number',
-    'numeric':'number',
-    'date':'date',
-    'calendar':'date',
-    'percent':'percent',
-    'bool':'bool',
-    'check':'bool',
-    'boolean':'bool',
+    'money': 'money',
+    'currency': 'money',
+    'number': 'number',
+    'numeric': 'number',
+    'date': 'date',
+    'calendar': 'date',
+    'percent': 'percent',
+    'bool': 'bool',
+    'check': 'bool',
+    'boolean': 'bool',
     'toggle': 'toggle',
-    'text':'text',
-    'email':'text',
-    'phone':'text',
+    'text': 'text',
+    'email': 'text',
+    'phone': 'text',
     'option': 'radio',
     'radio': 'radio',
-    'select':'select',
-    'list':'select'
+    'select': 'select',
+    'list': 'select'
   }
 
   var dataTypeMap = {
-    'money':'number',
-    'currency':'number',
-    'number':'number',
-    'integer':'number',
-    'float':'number',
-    'numeric':'number',
-    'date':'date',
-    'calendar':'date',
-    'percent':'number',
-    'bool':'bool',
-    'check':'bool',
-    'boolean':'bool',
-    'toggle':'toggle',
-    'text':'string',
-    'radio':'radio',
-    'select':'select'
+    'money': 'number',
+    'currency': 'number',
+    'number': 'number',
+    'integer': 'number',
+    'float': 'number',
+    'numeric': 'number',
+    'date': 'date',
+    'calendar': 'date',
+    'percent': 'number',
+    'bool': 'bool',
+    'check': 'bool',
+    'boolean': 'bool',
+    'toggle': 'toggle',
+    'text': 'string',
+    'radio': 'radio',
+    'select': 'select'
+  }
+
+  var autoNumericDefault = {
+    aSign: '',
+    pSign: 'p'
   }
 
   var numericDefaults = {
-    'money': {aSign: '$', mDec: '2', wEmpty: 'empty'},
-    'percent': {aSign: '%', pSign: 's', mDec: '0', wEmpty: 'empty'},
-    'number': {wEmpty: 'empty'},
-    'integer': {mDec: '0', wEmpty: 'empty'}
+    'money': {
+      aSign: '$',
+      mDec: '2',
+      wEmpty: 'empty'
+    },
+    'percent': {
+      aSign: '%',
+      mDec: '0',
+      wEmpty: 'empty'
+    },
+    'number': {
+      wEmpty: 'empty'
+    },
+    'integer': {
+      mDec: '0',
+      wEmpty: 'empty'
+    }
   }
 
   App.vue.components.vueInput = Vue.extend({
@@ -194,7 +212,9 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         default: null
       },
       'optionsForSelect': {
-        default: function() {return [];}
+        default: function() {
+          return [];
+        }
       },
       'disabled': {
         default: false
@@ -222,16 +242,16 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       if (this.isDate) {
         if (this._valueIsEmpty(this.value)) {
           this.inputValue = this.value;
-        }else{
+        } else {
           this.inputValue = moment(this.value).format(this._formatForDate());
         }
-      }else{
+      } else {
         this.inputValue = this.value;
       }
 
       this.renderHTML = true;
       var self = this;
-      this.$nextTick(function(){
+      this.$nextTick(function() {
         self.setupNumber();
         self.setupDate();
         self.validating = true;
@@ -243,7 +263,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         $(self.$els.input).off('focus');
         $(this.$els.input).autoNumeric('destroy');
         this.obj.destroy();
-      }catch(err){}
+      } catch (err) {}
     },
     watch: {
       disabled: function(newValue) {
@@ -254,19 +274,19 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       inputValue: function(newValue) {
         if (this.toString) {
           this.value = String(newValue);
-        }else if (this.isDate) {
+        } else if (this.isDate) {
           if (this._valueIsEmpty(newValue)) {
             this.value = null;
-          }else{
+          } else {
             this.value = new Date(newValue);
           }
-        }else if (this.isNumber){
-          try{
+        } else if (this.isNumber) {
+          try {
             this.value = $(this.$els.input).autoNumeric('get');
-          }catch(e){
+          } catch (e) {
             this.value = newValue;
           }
-        }else{
+        } else {
           this.value = newValue;
         }
         this.formatContent();
@@ -292,7 +312,14 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       },
       setupNumber: function() {
         if (this.isNumber) {
-          var baseOptions = numericDefaults[this.type] || numericDefaults[this.dataType] || {};
+
+          // Set options
+          var baseOptions = JSON.parse(JSON.stringify(autoNumericDefault));
+          var additionals = numericDefaults[this.type] || numericDefaults[this.dataType] || {};
+          Object.keys(additionals).forEach(function(opt) {
+            baseOptions[opt] = additionals[opt];
+          });
+
           if (this.precision) {
             baseOptions['mDec'] = this.precision;
           }
@@ -306,12 +333,16 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           if (this.numberPostLabel || this.numberLabel) {
             baseOptions['aSign'] = this.numberPostLabel || this.numberLabel;
             baseOptions['pSign'] = 's';
-          }else if (this.numberPreLabel) {
+          } else if (this.numberPreLabel) {
             baseOptions['aSign'] = this.numberPreLabel;
             baseOptions['pSign'] = 'p';
           }
 
           var self = this;
+          try {
+            $(this.$els.input).autoNumeric('destroy');
+          } catch (err) {}
+
           $(this.$els.input).autoNumeric('init', baseOptions).on('keyup', function() {
             self.value = $(self.$els.input).autoNumeric('get');
           });
@@ -372,7 +403,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
               this.message = "This can't be empty";
               this.inputFormat = this._formatForEmpty();
               return false;
-            }else{
+            } else {
               // Empty but not required
               return true;
             }
@@ -386,29 +417,29 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                 this.inputFormat = this._formatForEmail();
               }
               return res;
-            }else if (this.type === 'phone') {
+            } else if (this.type === 'phone') {
               var res = this._valueIsPhone(this.inputValue);
               if (!res) {
                 this.message = "Not a valid phone number.";
                 this.inputFormat = this._formatForPhone();
               }
               return res;
-            }else if (this.isDate) {
+            } else if (this.isDate) {
               var res = this._valueIsDate(this.inputValue);
               if (!res) {
                 this.message = "Not a valid date.";
                 this.inputFormat = this._formatForDate();
               }
               return res;
-            }else if (this.isNumber) {
+            } else if (this.isNumber) {
               if (this.hasUnrestrictedMax && numeral(this.inputValue).value() > this.max) {
                 this.message = "Number out of range.";
                 this.inputFormat = "less than or equal to " + this.max;
-              }else if (this.hasUnrestrictedMin && numeral(this.inputValue).value() < this.min) {
+              } else if (this.hasUnrestrictedMin && numeral(this.inputValue).value() < this.min) {
                 this.message = "Number out of range.";
                 this.inputFormat = "greater than or equal to " + this.min;
               }
-            }else{
+            } else {
               return true;
             }
           }
@@ -432,56 +463,56 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       isNumber: function() {
         if (this.dataType === 'number') {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       isDate: function() {
         if (this.dataType === 'date') {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       isBool: function() {
         if (this.dataType === 'bool') {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       isString: function() {
         if (this.dataType === 'string') {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       hasRestrictedMax: function() {
         if (this.max !== null && this.restrictMax) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       hasRestrictedMin: function() {
         if (this.min !== null && this.restrictMin) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       hasUnrestrictedMax: function() {
         if (this.max !== null && !this.restrictMax) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       hasUnrestrictedMin: function() {
         if (this.min !== null && !this.restrictMin) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
