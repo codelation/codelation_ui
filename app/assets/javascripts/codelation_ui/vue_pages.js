@@ -31,8 +31,15 @@
       });
     }
   }).exit(function() {
+    // Destroy Root
     App.vue.root.$destroy();
-    App.vue.extend = {};
     App.vue.root = null;
+    
+    // Reinit Extends
+    App.vue.extend = {
+      _info: 'Used to add components to the root vue component if not defined'
+    };
+    
+    
   });
 })();
