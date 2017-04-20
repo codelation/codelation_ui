@@ -1,0 +1,8 @@
+Description:
+    Generates the boilerplate code for making a Vue.js mixin
+
+Example:
+    rails generate ui:mixin <name>
+
+    This will create:
+        app/assets/javascripts/application/mixins/<name>.js

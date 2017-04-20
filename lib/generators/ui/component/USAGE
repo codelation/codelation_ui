@@ -1,0 +1,22 @@
+Description:
+    If only providing the name, it will create a vue component in the
+    general component folder with all JS, CSS, and HTML boilerplate.
+
+    If providing a controller plus name like 'users/profile_component',  it
+    will put the component in the controller's view directory
+
+Example:
+    rails generate ui:component <name>
+
+    This will create:
+        app/assets/javascripts/application/components/<name>.js
+        app/assets/stylesheets/application/components/<name>.scss
+        app/views/vue_components/_<name>.html
+
+
+    rails generate ui:component <controller>/<name>
+
+    This will create:
+        app/assets/javascripts/application/views/<controller>/templates/<name>.js
+        app/assets/stylesheets/application/views/<controller>/templates/<name>.scss
+        app/views/<controller>/templates/_<name>.html

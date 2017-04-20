@@ -1,0 +1,20 @@
+(function() {
+  "use strict";
+
+  App.register('<%= @page_name %>').enter(function() {
+
+    // You can swap out the id for inline html
+    var template = '#<%= @component_id %>';
+
+    App.vue.extend.<%= @component_name %> = Vue.extend({
+      template: template,
+      props: [],
+      data: function() {
+        return {}
+      },
+      methods: {
+
+      }
+    });
+  });
+})();
