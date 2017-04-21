@@ -1,2 +1,2 @@
-class <%= class_name %>Controller < ApplicationController
+class <%= @controller_name %>Controller < ApplicationController
 end
