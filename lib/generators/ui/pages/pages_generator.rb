@@ -21,6 +21,7 @@ module Ui
     end
 
     def create_controller_files
+      @controller_name = plural_name.titleize
       template 'controller.rb', File.join('app/controllers', "#{plural_name}_controller.rb")
     end
 
