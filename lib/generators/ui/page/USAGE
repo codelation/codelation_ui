@@ -1,0 +1,11 @@
+Description:
+    Generates the HTML page in the pages directory as well as the
+    related styles and javascripts
+
+Example:
+    rails generate ui:page <name>
+
+    This will create:
+        app/assets/javascripts/application/views/pages/<name>.js
+        app/assets/stylesheets/application/views/pages/<name>.scss
+        app/views/pages/<name>.html.erb

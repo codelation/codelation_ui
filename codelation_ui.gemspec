@@ -21,6 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency "autoprefixer-rails", "~> 6.7"
   s.add_dependency "turbolinks", "~> 2.5"
   s.add_dependency "uglifier", "~> 2.7"
-  s.add_dependency "title"
   s.add_development_dependency "rake"
 end

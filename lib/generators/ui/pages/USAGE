@@ -1,23 +1,49 @@
 Description:
     Generates the HTML, controller, routes, JS, and CSS for a page name.  If
     you provide a singular name, it will generate singular routes (meaning no
-    index route and no ids in routes), plural names will general plural routes
+    index route and no ids in routes), plural names will general plural routes.
+    Providing a path will create a single page in the controllers directory
 
-Example:
-    rails generate ui:pages <name>
+Example (plural routes):
+    rails generate ui:pages users
 
     This will create:
-        app/assets/javascripts/application/views/<plural_name>/index.js *
-        app/assets/javascripts/application/views/<plural_name>/show.js
-        app/assets/javascripts/application/views/<plural_name>/edit.js
-        app/assets/javascripts/application/views/<plural_name>/new.js
-        app/assets/stylesheets/application/views/<plural_name>/index.js *
-        app/assets/stylesheets/application/views/<plural_name>/show.js
-        app/assets/stylesheets/application/views/<plural_name>/edit.js
-        app/assets/stylesheets/application/views/<plural_name>/new.js
-        app/views/<plural_name>/index.html.erb *
-        app/views/<plural_name>/show.html.erb
-        app/views/<plural_name>/edit.html.erb
-        app/views/<plural_name>/new.html.erb
-        app/controllers/<plural_name>_controller.rb
-        resources :<plural_name> || resource :<singular_name>
+        app/assets/javascripts/application/views/users/index.js
+        app/assets/javascripts/application/views/users/show.js
+        app/assets/javascripts/application/views/users/edit.js
+        app/assets/javascripts/application/views/users/new.js
+        app/assets/stylesheets/application/views/users/index.scss
+        app/assets/stylesheets/application/views/users/show.scss
+        app/assets/stylesheets/application/views/users/edit.scss
+        app/assets/stylesheets/application/views/users/new.scss
+        app/views/users/index.html.erb
+        app/views/users/show.html.erb
+        app/views/users/edit.html.erb
+        app/views/users/new.html.erb
+        app/controllers/users_controller.rb
+        resources :users
+
+Example (singular routes):
+    rails generate ui:pages user
+
+    This will create:
+        app/assets/javascripts/application/views/users/show.js
+        app/assets/javascripts/application/views/users/edit.js
+        app/assets/javascripts/application/views/users/new.js
+        app/assets/stylesheets/application/views/users/show.scss
+        app/assets/stylesheets/application/views/users/edit.scss
+        app/assets/stylesheets/application/views/users/new.scss
+        app/views/users/show.html.erb
+        app/views/users/edit.html.erb
+        app/views/users/new.html.erb
+        app/controllers/users_controller.rb
+        resource :user
+
+Example (individual pages):
+    rails generate ui:pages user/password_reset
+
+    This will create:
+        app/assets/javascripts/application/views/users/password_reset.js
+        app/assets/stylesheets/application/views/users/password_reset.scss
+        app/views/users/password_reset.html.erb
+        get "user/password_reset", to: "users#password_reset", as: :password_reset
