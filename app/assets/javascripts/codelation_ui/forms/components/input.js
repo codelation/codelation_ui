@@ -200,6 +200,11 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       'onValidate': {
         default: null
       },
+      'forcedErrors': {
+        default: function() {
+          return [];
+        }
+      },
       'toString': {
         default: false
       },
@@ -404,6 +409,16 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       validateContent: function() {
         this.message = null;
         this.inputFormat = null;
+        var self = this;
+        var errors = this.forcedErrors.find(function(e) {
+          if (!e.valid) {
+            self.message = e.message || "Invalid";
+            return true;
+          }
+        });
+        if (errors !== undefined) {
+          return false;
+        }
         if (this.validating && !this.disabled) {
           if (this._valueIsEmpty(this.inputValue)) {
             if (this.required) {
