@@ -410,9 +410,6 @@ Used to remove the icon if the field has one.  Only effects Date types right now
               this.message = "This can't be empty";
               this.inputFormat = this._formatForEmpty();
               return false;
-            } else {
-              // Empty but not required
-              return true;
             }
           }
 
@@ -446,18 +443,18 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                 this.message = "Number out of range.";
                 this.inputFormat = "greater than or equal to " + this.min;
               }
+            }
+
+            if (this.onValidate === null) {
+              return true;
             } else {
-              if (this.onValidate === null) {
+              var result = this.onValidate();
+              if (result.valid) {
                 return true;
               } else {
-                var result = this.onValidate();
-                if (result.valid) {
-                  return true;
-                } else {
-                  this.message = result.message || "Invalid";
-                  this.inputFormat = result.inputFormat || "";
-                  return false;
-                }
+                this.message = result.message || "Invalid";
+                this.inputFormat = result.inputFormat || "";
+                return false;
               }
             }
           }
