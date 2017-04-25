@@ -422,22 +422,22 @@ Used to remove the icon if the field has one.  Only effects Date types right now
               if (!res) {
                 this.message = "Not a valid email address.";
                 this.inputFormat = this._formatForEmail();
+                return false;
               }
-              return res;
             } else if (this.type === 'phone') {
               var res = this._valueIsPhone(this.inputValue);
               if (!res) {
                 this.message = "Not a valid phone number.";
                 this.inputFormat = this._formatForPhone();
+                return false;
               }
-              return res;
             } else if (this.isDate) {
               var res = this._valueIsDate(this.inputValue);
               if (!res) {
                 this.message = "Not a valid date.";
                 this.inputFormat = this._formatForDate();
+                return false;
               }
-              return res;
             } else if (this.isNumber) {
               if (this.hasUnrestrictedMax && numeral(this.inputValue).value() > this.max) {
                 this.message = "Number out of range.";
