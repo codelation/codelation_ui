@@ -73,6 +73,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                     <i v-if="inputIcon" v-on:click="activeObject()" class="vue-input-icon fa" :class="[inputIcon]"></i>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-model="inputValue" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-model="inputValue" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="password" name="{{ name }}" v-if="showInputFor(\'password\')" v-model="inputValue" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input v-model="inputValue" :placeholder="placeholder">\
                     <input :disabled="disabled" id="{{ id}}" type="checkbox" name="{{ name }}" v-if="showInputFor(\'bool\')" v-el:input v-model="inputValue">\
                     <input :disabled="disabled" id="{{ id}}" type="radio" name="{{ name }}" v-if="showInputFor(\'radio\')" v-el:input v-model="inputValue">\
@@ -103,6 +104,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'text': 'text',
     'email': 'text',
     'phone': 'text',
+    'password': 'password',
+    'pass': 'password',
     'option': 'radio',
     'radio': 'radio',
     'select': 'select',
@@ -124,6 +127,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'boolean': 'bool',
     'toggle': 'toggle',
     'text': 'string',
+    'password': 'password',
     'radio': 'radio',
     'select': 'select'
   }
@@ -192,6 +196,9 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       },
       'validate': {
         default: true
+      },
+      'onValidate': {
+        default: null
       },
       'toString': {
         default: false
@@ -440,7 +447,18 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                 this.inputFormat = "greater than or equal to " + this.min;
               }
             } else {
-              return true;
+              if (this.onValidate === null) {
+                return true;
+              } else {
+                var result = this.onValidate();
+                if (result.valid) {
+                  return true;
+                } else {
+                  this.message = result.message || "Invalid";
+                  this.inputFormat = result.inputFormat || "";
+                  return false;
+                }
+              }
             }
           }
         }
