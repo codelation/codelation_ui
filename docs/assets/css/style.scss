@@ -7,6 +7,9 @@ header {
   width: auto;
   float: none;
   position: relative;
+  padding: 15px 20px;
+  background: black;
+  color: white;
 
   h1 {
     color: inherit;
@@ -43,6 +46,11 @@ aside {
   display: flex;
   width: auto;
   margin: 20px;
+
+  h1 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 3px;
+  }
 }
 
 body {
@@ -52,7 +60,10 @@ body {
   font-weight: lighter;
 }
 
-h1,
-h2 {
+h1 {
   font-weight: lighter;
+}
+
+h2 {
+  font-weight: 200;
 }
