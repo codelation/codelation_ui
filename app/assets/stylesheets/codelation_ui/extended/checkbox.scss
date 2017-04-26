@@ -3,6 +3,9 @@ $checkbox-border-color: #5a5a5a !default;
 $checkbox-size: 1.3em !default;
 
 .ui.ui-checkbox {
+  @include display(flex);
+  @include justify-content(center);
+  @include align-items(center);
 
   &.ui-disabled {
     opacity: 0.7;
@@ -13,16 +16,15 @@ $checkbox-size: 1.3em !default;
   }
 
   input {
-    margin-left: -9999px;
-    position: absolute;
-    visibility: hidden;
+    display: none;
 
     & + label {
       position: relative;
       cursor: pointer;
       display: inline-block;
-      height: 1.55em;
-      line-height: 1.55em;
+      height: 1.25em;
+      width: 1.25em;
+      line-height: 1.25em;
       font-size: 1em;
       @include user-select(none);
 
@@ -31,8 +33,9 @@ $checkbox-size: 1.3em !default;
         position: absolute;
         top: 0;
         left: 0;
-        width: 18px;
-        height: 18px;
+        height: 1.25em;
+        width: 1.25em;
+        line-height: 1.25em;
         z-index: 0;
         border: 2px solid $checkbox-border-color;
         border-radius: 1px;
@@ -52,15 +55,6 @@ $checkbox-size: 1.3em !default;
   }
 
   input:not(:checked) {
-    border-radius: 1px;
-    margin-top: 2px;
-    height: 20px;
-    width: 20px;
-    background-color: transparent;
-    border: 2px solid $checkbox-border-color;
-    top: 0px;
-    z-index: 0;
-
     & + label {
       &:before {
         width: 0;

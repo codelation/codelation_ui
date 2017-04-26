@@ -22,7 +22,7 @@
       }
     },
     ready: function() {
-      if (App.ui.config.form.disableValidation == true) {
+      if (App.ui.config.forms.form.disableValidation == true) {
         this.form.formValidationDeveloperMode = true;
         console.error("VUE FORMS DEVELOPER MODE: Validations will not fail the form");
       }
