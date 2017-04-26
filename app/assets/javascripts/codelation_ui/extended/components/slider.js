@@ -48,7 +48,7 @@
                     </div>\
                   </div>';
 
-  App.vue.components.vueSlider = Vue.extend({
+  App.ui.components.extended.slider = Vue.extend({
     template: template,
     data: function() {
       return {
@@ -158,8 +158,7 @@
         var dir = this.tooltipDir || (this.direction === 'vertical' ? 'left' : 'top')
         if (Array.isArray(dir)) {
           return this.isRange ? dir : dir[1]
-        }
-        else {
+        } else {
           return this.isRange ? [dir, dir] : dir
         }
       },
@@ -199,15 +198,13 @@
               if (index0 > -1 && index1 > -1) {
                 this.currentValue = [index0, index1]
               }
-            }
-            else {
+            } else {
               var index = this.data.indexOf(val)
               if (index > -1) {
                 this.currentValue = index
               }
             }
-          }
-          else {
+          } else {
             this.currentValue = val
           }
         }
@@ -215,16 +212,14 @@
       currentIndex: function() {
         if (this.isRange) {
           return this.data ? this.currentValue : [(this.currentValue[0] - this.minimum) / this.spacing, (this.currentValue[1] - this.minimum) / this.spacing]
-        }
-        else {
+        } else {
           return (this.currentValue - this.minimum) / this.spacing
         }
       },
       indexRange: function() {
         if (this.isRange) {
           return this.currentIndex
-        }
-        else {
+        } else {
           return [0, this.currentIndex]
         }
       },
@@ -241,8 +236,7 @@
       total: function() {
         if (this.data) {
           return this.data.length - 1
-        }
-        else if (~~((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
+        } else if (~~((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
           console.error('[Vue-slider warn]: Prop[interval] is illegal, Please make sure that the interval can be divisible')
         }
         return (this.maximum - this.minimum) / this.interval
@@ -271,16 +265,14 @@
       sliderStyles: function() {
         if (Array.isArray(this.sliderStyle)) {
           return this.isRange ? this.sliderStyle : this.sliderStyle[1]
-        }
-        else {
+        } else {
           return this.isRange ? [this.sliderStyle, this.sliderStyle] : this.sliderStyle
         }
       },
       tooltipStyles: function() {
         if (Array.isArray(this.tooltipStyle)) {
           return this.isRange ? this.tooltipStyle : this.tooltipStyle[1]
-        }
-        else {
+        } else {
           return this.isRange ? [this.tooltipStyle, this.tooltipStyle] : this.tooltipStyle
         }
       },
@@ -348,8 +340,7 @@
       max: function(val) {
         if (this.flag || this.data) {
           this.refresh()
-        }
-        else if (this.isRange) {
+        } else if (this.isRange) {
           var bool
           val = this.val.map(function(v) {
             if (v > val) {
@@ -360,8 +351,7 @@
           })
           bool && this.setValue(val)
           this.refresh()
-        }
-        else {
+        } else {
           this.val > val && this.setValue(val)
           this.refresh()
         }
@@ -369,8 +359,7 @@
       min: function(val) {
         if (this.flag || this.data) {
           this.refresh()
-        }
-        else if (this.isRange) {
+        } else if (this.isRange) {
           var bool
           val = this.val.map(function(v) {
             if (v < val) {
@@ -381,8 +370,7 @@
           })
           bool && this.setValue(val)
           this.refresh()
-        }
-        else {
+        } else {
           this.val < val && this.setValue(val)
           this.refresh()
         }
@@ -403,15 +391,16 @@
         if (two === undefined) {
           return one;
         }
-        for (var attrname in two) { one[attrname] = two[attrname]; }
+        for (var attrname in two) {
+          one[attrname] = two[attrname];
+        }
         return one;
       },
       bindEvents: function() {
         if (this.isMoblie) {
           this.$els.wrap.addEventListener('touchmove', this.moving)
           this.$els.wrap.addEventListener('touchend', this.moveEnd)
-        }
-        else {
+        } else {
           document.addEventListener('mousemove', this.moving)
           document.addEventListener('mouseup', this.moveEnd)
           document.addEventListener('mouseleave', this.moveEnd)
@@ -423,8 +412,7 @@
         if (this.isMoblie) {
           this.$els.wrap.removeEventListener('touchmove', this.moving)
           this.$els.wrap.removeEventListener('touchend', this.moveEnd)
-        }
-        else {
+        } else {
           document.removeEventListener('mousemove', this.moving)
           document.removeEventListener('mouseup', this.moveEnd)
           document.removeEventListener('mouseleave', this.moveEnd)
@@ -457,7 +445,8 @@
         if (!this.flag) return false
         e.preventDefault()
 
-        if (this.isMoblie) e = e.targetTouches[0]
+        if (this.isMoblie)
+          e = e.targetTouches[0]
         this.setValueOnPos(this.getPos(e), true)
       },
       moveEnd: function(e) {
@@ -466,8 +455,7 @@
           if (this.lazy && this.isDiff(this.val, this.value)) {
             this.syncValue()
           }
-        }
-        else {
+        } else {
           return false
         }
         this.flag = false
@@ -480,24 +468,25 @@
           this.setTransform(pos)
           var v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
           this.setCurrentValue(v, isDrag)
-        }
-        else if (pos < range[0]) {
+        } else if (pos < range[0]) {
           this.setTransform(range[0])
           this.setCurrentValue(valueRange[0])
-          if (this.currentSlider === 1) this.currentSlider = 0
-        }
-        else {
+          if (this.currentSlider === 1)
+            this.currentSlider = 0
+        } else {
           this.setTransform(range[1])
           this.setCurrentValue(valueRange[1])
-          if (this.currentSlider === 0) this.currentSlider = 1
+          if (this.currentSlider === 0)
+            this.currentSlider = 1
         }
       },
       isDiff: function(a, b) {
         if (Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)) {
           return true
-        }
-        else if (Array.isArray(a) && a.length === b.length) {
-          return a.some(function(v, i) {return v !== b[i]})
+        } else if (Array.isArray(a) && a.length === b.length) {
+          return a.some(function(v, i) {
+            return v !== b[i]
+          })
         }
         return a !== b
       },
@@ -510,8 +499,7 @@
               this.syncValue()
             }
           }
-        }
-        else if (this.isDiff(this.currentValue, val)) {
+        } else if (this.isDiff(this.currentValue, val)) {
           this.currentValue = val
           if (!this.lazy || !this.flag) {
             this.syncValue()
@@ -524,13 +512,11 @@
           var value
           if (this.data) {
             value = [this.data[val[0]], this.data[val[1]]]
-          }
-          else {
+          } else {
             value = [this.spacing * val[0] + this.minimum, this.spacing * val[1] + this.minimum]
           }
           this.setValue(value)
-        }
-        else {
+        } else {
           val = this.spacing * val + this.minimum
           if (this.isRange) {
             this.currentSlider = val > ((this.currentValue[1] - this.currentValue[0]) / 2 + this.currentValue[0]) ? 1 : 0
@@ -545,7 +531,7 @@
         }
 
         this.$nextTick(function() {
-           this.setPosition(speed)
+          this.setPosition(speed)
         })
       },
       setPosition: function(speed) {
@@ -555,8 +541,7 @@
           this.setTransform(this.position[this.currentSlider])
           this.currentSlider = 1
           this.setTransform(this.position[this.currentSlider])
-        }
-        else {
+        } else {
           this.setTransform(this.position)
         }
         this.flag || this.setTransitionTime(0)
@@ -573,21 +558,18 @@
           if (this.direction === 'vertical') {
             this.$els.process.style.height = processSize
             this.$els.process.style[this.reverse ? 'top' : 'bottom'] = processPos
-          }
-          else {
+          } else {
             this.$els.process.style.width = processSize
             this.$els.process.style[this.reverse ? 'right' : 'left'] = processPos
           }
-        }
-        else {
+        } else {
           this.slider.style.transform = translateValue
           this.slider.style.WebkitTransform = translateValue
           this.slider.style.msTransform = translateValue
           if (this.direction === 'vertical') {
             this.$els.process.style.height = val + 'px'
             this.$els.process.style[this.reverse ? 'top' : 'bottom'] = 0
-          }
-          else {
+          } else {
             this.$els.process.style.width = val + 'px'
             this.$els.process.style[this.reverse ? 'right' : 'left'] = 0
           }
@@ -602,8 +584,7 @@
           }
           this.$els.process.style.transitionDuration = time + 's'
           this.$els.process.style.WebkitTransitionDuration = time + 's'
-        }
-        else {
+        } else {
           this.slider.style.transitionDuration = time + 's'
           this.slider.style.WebkitTransitionDuration = time + 's'
           this.$els.process.style.transitionDuration = time + 's'
@@ -638,7 +619,7 @@
     },
     ready: function() {
       var self = this;
-      this.$nextTick(function(){
+      this.$nextTick(function() {
         self.getStaticData()
         self.setValue(self.value, 0, true)
         self.bindEvents()

@@ -99,6 +99,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'percent': 'percent',
     'bool': 'bool',
     'check': 'bool',
+    'checkbox': 'bool',
     'boolean': 'bool',
     'toggle': 'toggle',
     'text': 'text',
@@ -157,8 +158,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     }
   }
 
-  App.vue.components.vueInput = Vue.extend({
-    mixins: [App.vue.interfaces.formValidation, App.vue.interfaces.contentValidators, App.vue.interfaces.helpers],
+  App.ui.components.forms.input = Vue.extend({
+    mixins: [App.ui.interfaces.forms.input, App.ui.interfaces.std.validate, App.ui.interfaces.std.helpers],
     template: template,
     props: {
       'type': {
@@ -200,10 +201,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       'onValidate': {
         default: null
       },
-      'forcedErrors': {
-        default: function() {
-          return [];
-        }
+      'forcedError': {
+        default: null
       },
       'toString': {
         default: false
@@ -278,6 +277,12 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       } catch (err) {}
     },
     watch: {
+      forcedError: {
+        handler: function() {
+          this.validateContent();
+        },
+        deep: true
+      },
       disabled: function(newValue) {
         if (newValue) {
           this.validateContent();
@@ -402,23 +407,13 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       formatContent: function() {
         if (this.formatting) {
           if (this.type === 'phone' && this._valueIsPhone(this.inputValue)) {
-            this.inputValue = App.vue.interfaces.formatters.methods._formatToPhoneNumber(this.inputValue);
+            this.inputValue = App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue);
           }
         }
       },
       validateContent: function() {
         this.message = null;
         this.inputFormat = null;
-        var self = this;
-        var errors = this.forcedErrors.find(function(e) {
-          if (!e.valid) {
-            self.message = e.message || "Invalid";
-            return true;
-          }
-        });
-        if (errors !== undefined) {
-          return false;
-        }
         if (this.validating && !this.disabled) {
           if (this._valueIsEmpty(this.inputValue)) {
             if (this.required) {
@@ -460,15 +455,20 @@ Used to remove the icon if the field has one.  Only effects Date types right now
               }
             }
 
-            if (this.onValidate === null) {
-              return true;
-            } else {
+            if (this.onValidate !== null) {
               var result = this.onValidate();
               if (result.valid) {
                 return true;
               } else {
                 this.message = result.message || "Invalid";
                 this.inputFormat = result.inputFormat || "";
+                return false;
+              }
+            }
+
+            if (this.forcedError !== null) {
+              if (!this.forcedError.valid) {
+                this.message = this.forcedError.message || "Invalid";
                 return false;
               }
             }

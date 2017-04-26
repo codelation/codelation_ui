@@ -2,8 +2,8 @@
   "use strict"
 
   App.register('<%= @register_name %>').enter(function() {
-    App.vue.root = new Vue({
-      el: App.vue.config.main.rootComponentNode,
+    App.ui.root = new Vue({
+      el: App.ui.config.main.rootComponentNode,
       mixins: [],
       components: {},
       data: function() {

@@ -1,8 +1,8 @@
 
-(function(){
+(function() {
   "use strict";
 
-  App.vue.interfaces.number = {
+  App.ui.interfaces.std.number = {
     methods: {
       _numeral: numeral,
       // checks if the denominator is zero and returns zero

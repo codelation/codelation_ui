@@ -33,9 +33,9 @@
 (function() {
   "use strict";
 
-   App.vue.config.code = {
-     'dark': false 
-   }
+  App.ui.config.extended.code = {
+    'dark': false
+  }
 
 
   var template = '<div class="vue-code" :class="[inline ? \'vue-code-inline\' : \'vue-code-block\', dark ? \'vue-code-dark\' : \'\']">\
@@ -43,7 +43,7 @@
                     <span v-else><code v-el:code :class="lang"><slot></slot></code></span>\
                   </div>';
 
-  App.vue.components.vueCode = Vue.extend({
+  App.ui.components.extended.code = Vue.extend({
     template: template,
     props: {
       lang: String,
@@ -53,7 +53,7 @@
       },
       dark: {
         type: Boolean,
-        default: App.vue.config.code.dark
+        default: App.ui.config.extended.code.dark
       }
     },
     ready: function() {

@@ -2,25 +2,28 @@
   "use strict";
 
   App.register('first').enter(function() {
+
+    App.ui.config.csrf_token = $('head meta[name="csrf-token"]').first().attr('content') || null;
+
     // All vue components inherit this.  Used to show the vue page after the js loads
     Vue.mixin({
-      mixins: App.vue.config.main.includedInterfaces,
-      components: App.vue.globalComponents
+      mixins: App.ui.config.main.includedInterfaces,
+      components: App.ui.globalComponents
     });
   });
 
   App.register('last').enter(function() {
-    
+
     // Outputs the vue object
-    if (App.vue.config.main.showInterfaces) {
+    if (App.ui.config.main.showInterfaces) {
       console.warn("Loaded Vue")
-      console.warn(App.vue);
+      console.warn(App.ui);
     }
 
-    if (App.vue.root === null && $(App.vue.config.main.rootComponentNode || 'body').length) {
-      App.vue.root = new Vue({
-        el: App.vue.config.main.rootComponentNode || 'body',
-        components: App.vue.extend,
+    if (App.ui.root === null && $(App.ui.config.main.rootComponentNode || 'body').length) {
+      App.ui.root = new Vue({
+        el: App.ui.config.main.rootComponentNode || 'body',
+        components: App.ui.extend,
         data: function() {
           return {
             pageLoadedClass: "vue-page-loaded"
@@ -30,11 +33,11 @@
     }
   }).exit(function() {
     // Destroy Root
-    App.vue.root.$destroy();
-    App.vue.root = null;
-    
+    App.ui.root.$destroy();
+    App.ui.root = null;
+
     // Reinit Extends
-    App.vue.extend = {
+    App.ui.extend = {
       _info: 'Used to hold references to per page components and attach to the root component if you did not define one.'
     };
   });

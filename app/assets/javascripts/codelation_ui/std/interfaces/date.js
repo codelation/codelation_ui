@@ -1,7 +1,7 @@
 (function() {
-  App.vue.interfaces.date = {
+  App.ui.interfaces.std.date = {
     methods: {
-    // Includes the Momentjs Library
+      // Includes the Momentjs Library
       _moment: moment
     }
   };

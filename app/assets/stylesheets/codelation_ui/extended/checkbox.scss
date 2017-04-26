@@ -1,0 +1,114 @@
+$checkbox-color: $default-ui-color !default;
+$checkbox-border-color: #5a5a5a !default;
+$checkbox-size: 1.3em !default;
+
+.ui.ui-checkbox {
+
+  &.ui-disabled {
+    opacity: 0.7;
+
+    label {
+      cursor: not-allowed;
+    }
+  }
+
+  input {
+    margin-left: -9999px;
+    position: absolute;
+    visibility: hidden;
+
+    & + label {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      height: 1.55em;
+      line-height: 1.55em;
+      font-size: 1em;
+      @include user-select(none);
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        z-index: 0;
+        border: 2px solid $checkbox-border-color;
+        border-radius: 1px;
+        margin-top: 2px;
+        transition: .2s;
+      }
+
+      &:after {
+        content: '';
+        left: 0;
+        position: absolute;
+        @include transition(border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s);
+        z-index: 1;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  input:not(:checked) {
+    border-radius: 1px;
+    margin-top: 2px;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: 2px solid $checkbox-border-color;
+    top: 0px;
+    z-index: 0;
+
+    & + label {
+      &:before {
+        width: 0;
+        height: 0;
+        border: 3px solid transparent;
+        left: 6px;
+        top: 10px;
+        @include transform(rotateZ(37deg));
+        @include transform-origin(100% 100%);
+      }
+
+      &:after {
+        height: 1.25em;
+        width: 1.25em;
+        background-color: transparent;
+        border: 2px solid $checkbox-border-color;
+        top: 0px;
+        z-index: 0;
+      }
+    }
+  }
+
+  input:checked {
+
+    & + label {
+
+      &:before {
+        top: 0;
+        left: .03em;
+        width: .5em;
+        height: .85em;
+        border-top: 2px solid transparent;
+        border-left: 2px solid transparent;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        @include transform(rotateZ(37deg));
+        @include transform-origin(100% 100%);
+        z-index: 1;
+      }
+
+      &:after {
+        top: 0;
+        width: 1.25em;
+        height: 1.25em;
+        border: 2px solid $checkbox-color;
+        background-color: $checkbox-color;
+        z-index: 0;
+      }
+    }
+  }
+}

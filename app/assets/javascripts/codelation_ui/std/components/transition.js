@@ -1,9 +1,9 @@
 (function() {
   "use strict";
-  
+
   var template = '<div v-if="pageTransitionFinished" :transition="transitionName"><slot></slot></div>';
 
-  App.vue.components.vueTransition = Vue.extend({
+  App.ui.components.std.transition = Vue.extend({
     props: {
       transitionName: {
         type: String,

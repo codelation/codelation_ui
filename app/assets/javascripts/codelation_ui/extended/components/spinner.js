@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  App.vue.components.vueSpinner = Vue.extend({
+  App.ui.components.extended.spinner = Vue.extend({
     template: ' <div class="vue-spinner" :class="classes" :style="styles">\
                   <svg class="vue-spinner-draw" viewBox="25 25 50 50" v-if="spinning">\
                     <circle class="vue-spinner-path" cx="50" cy="50" r="20" :stroke-width="stroke" :stroke-dasharray="dashProgress">\

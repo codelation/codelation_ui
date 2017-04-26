@@ -18,9 +18,9 @@
 // `timingFunc` | `linear` | The transition timing function to use for the CSS transition. See [transition-timing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function).
 
 
-(function(){
+(function() {
   "use strict"
-  
+
   var template = '<div class="vue-radial-progress-bar-container" :class="[over ? \'vue-radial-progress-bar-over\' : \'\', complete ? \'vue-radial-progress-bar-complete\' : \'\']" :style="containerStyle">\
                     <div class="vue-radial-progress-bar-inner" :style="innerCircleStyle">\
                       <slot></slot>\
@@ -62,7 +62,7 @@
                     </svg>\
                   </div>';
 
-   App.vue.components.vueRadialProgressBar = Vue.extend({
+  App.ui.components.extended.radialProgressBar = Vue.extend({
     template: template,
     props: {
       diameter: {
@@ -118,14 +118,14 @@
     computed: {
       over: function() {
         if (this.completedSteps > this.totalSteps) {
-         return true; 
+          return true;
         }
 
         return false;
       },
       complete: function() {
         if (this.completedSteps === this.totalSteps) {
-         return true; 
+          return true;
         }
 
         return false;
@@ -207,7 +207,10 @@
         var radius = 0.5
         var x = radius + (radius * Math.cos(angle))
         var y = radius + (radius * Math.sin(angle))
-        return { x: x, y: y }
+        return {
+          x: x,
+          y: y
+        }
       },
       gotoPoint: function() {
         var point = this.getPointOfCircle(this.currentAngle)
@@ -232,7 +235,7 @@
         var self = this;
         this.gradientAnimation = setInterval(function() {
           if (isMoveForward && i >= self.totalPoints ||
-              !isMoveForward && i < self.totalPoints) {
+            !isMoveForward && i < self.totalPoints) {
             clearInterval(self.gradientAnimation);
             return;
           }
@@ -248,20 +251,30 @@
     },
     watch: {
       totalSteps: function() {
-        this.changeProgress({ isAnimate: true })
+        this.changeProgress({
+          isAnimate: true
+        })
       },
       completedSteps: function() {
-        this.changeProgress({ isAnimate: true })
+        this.changeProgress({
+          isAnimate: true
+        })
       },
       diameter: function() {
-        this.changeProgress({ isAnimate: true })
+        this.changeProgress({
+          isAnimate: true
+        })
       },
       strokeWidth: function() {
-        this.changeProgress({ isAnimate: true })
+        this.changeProgress({
+          isAnimate: true
+        })
       }
     },
     created: function() {
-      this.changeProgress({ isAnimate: false })
+      this.changeProgress({
+        isAnimate: false
+      })
     }
   });
 })()

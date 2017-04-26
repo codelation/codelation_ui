@@ -1,3 +1,7 @@
+$toggle-switch-background-color: #ddd;
+$toggle-switch-on-color: $accent-color;
+$toggle-switch-size: 1.3em;
+
 .vue-input {
   display: inline-block;
   position: relative;
@@ -16,6 +20,69 @@
 
     & ~ input {
       padding-left: 25px;
+    }
+  }
+
+  .vue-input-toggle {
+    label {
+      background-color: $toggle-switch-background-color;
+      border-radius: $toggle-switch-size;
+      cursor: pointer;
+      display: inline-block;
+      height: $toggle-switch-size;
+      outline: none;
+      padding: 2px;
+      position: relative;
+      user-select: none;
+      width: $toggle-switch-size * 2;
+
+      &:before,
+      &:after {
+        bottom: 1px;
+        content: "";
+        display: block;
+        left: 1px;
+        position: absolute;
+        top: 1px;
+      }
+
+      &:before {
+        background-color: #f1f1f1;
+        border-radius: $toggle-switch-size;
+        right: 1px;
+        transition: background 0.4s;
+      }
+
+      &:after {
+        background-color: #fff;
+        border-radius: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: margin 0.4s;
+        width: $toggle-switch-size - 0.125em;
+      }
+    }
+
+    input {
+      margin-left: -9999px;
+      position: absolute;
+      visibility: hidden;
+
+      &:checked + label {
+        &:before {
+          background-color: $toggle-switch-on-color;
+        }
+
+        &:after {
+          margin-left: $toggle-switch-size;
+        }
+      }
+    }
+
+    + label {
+      cursor: pointer;
+      line-height: 1.5em;
+      margin-left: 5px;
+      vertical-align: top;
     }
   }
 

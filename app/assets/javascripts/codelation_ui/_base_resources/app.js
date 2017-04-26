@@ -63,7 +63,7 @@
 
   // Fires off any callbacks registered for enter, with or without Turbolinks.
   $(document).on('ready page:load page:restore', function() {
-    bodyElement = $('body');
+    bodyElement = document.body;
 
     // Determine which functions should be fired
     var fireConfigFunctions = [];
@@ -72,7 +72,7 @@
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
+      if (bodyClass === 'component' || bodyElement.className.includes(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
@@ -113,7 +113,7 @@
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || bodyElement.hasClass(bodyClass)) {
+      if (bodyClass === 'component' || bodyElement.className.includes(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 

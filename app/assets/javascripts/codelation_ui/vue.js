@@ -2,7 +2,7 @@
 //= require_self
 //= require ./std
 
-App.vue = {
+App.ui = {
   _info: 'Contains object references to all functionality that the UI offers as well as the reference to the root vue component',
   interfaces: {
     _info: 'Used for containing mixins and methods used for vue'

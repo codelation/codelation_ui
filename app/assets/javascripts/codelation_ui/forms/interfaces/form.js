@@ -2,11 +2,11 @@
   "use strict";
 
   // Exposes method validateForm(success, fail)
-  App.vue.config.form = {
+  App.ui.config.forms.form = {
     disableValidation: false
   }
-  
-  App.vue.interfaces.form = {
+
+  App.ui.interfaces.forms.form = {
     data: function() {
       return {
         form: {
@@ -22,7 +22,7 @@
       }
     },
     ready: function() {
-      if (App.vue.config.form.disableValidation == true) {
+      if (App.ui.config.form.disableValidation == true) {
         this.form.formValidationDeveloperMode = true;
         console.error("VUE FORMS DEVELOPER MODE: Validations will not fail the form");
       }
@@ -32,7 +32,7 @@
         if (this.form.formValidationWatch && this.form.formValidationResponded === this.form.formValidationInputs) {
           if (this.form.formValidationValid && typeof this.form.formValidationValidAction === 'function') {
             this.form.formValidationValidAction();
-          }else if (!this.form.formValidationValid && typeof this.form.formValidationInvalidAction === 'function') {
+          } else if (!this.form.formValidationValid && typeof this.form.formValidationInvalidAction === 'function') {
             this.form.formValidationInvalidAction();
           }
         }
@@ -59,7 +59,7 @@
 
         if (this.form.formValidationInputs < 1) {
           this._formValidationRespondToForm();
-        }else{
+        } else {
           this.$broadcast('_form-validation-validate-inputs', this._formValidationValidateCallback);
         }
       }

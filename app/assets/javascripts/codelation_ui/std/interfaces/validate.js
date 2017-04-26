@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  App.vue.interfaces.contentValidators = {
+  App.ui.interfaces.std.validate = {
     methods: {
       _formatForEmpty: function() {
         return null;
@@ -8,7 +8,7 @@
       _valueIsEmpty: function(value) {
         if (value === undefined || value === null || String(value).trim().length < 1) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
@@ -17,9 +17,9 @@
       },
       _valueIsDate: function(date) {
         var r = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
-        if (r.test(date)){
+        if (r.test(date)) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
@@ -28,9 +28,9 @@
       },
       _valueIsEmail: function(email) {
         var r = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-        if (r.test(email)){
+        if (r.test(email)) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
@@ -41,7 +41,7 @@
         var r = /^(?:(\+?(?:(\d{1,2}))\s?)?(\(?(?:(\d{3}))\)?(\s|-|\.)?)((?:(\d{3}))(\s|-|\.)?)((?:(\d{4}))))$/i;
         if (r.test(phone)) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }

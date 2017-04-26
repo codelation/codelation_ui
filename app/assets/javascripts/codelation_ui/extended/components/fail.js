@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  App.vue.components.vueFail = Vue.extend({
+  App.ui.components.extended.fail = Vue.extend({
     template: '<div :style="styles">\
     <svg class="vue-fail" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">\
       <circle class="vue-fail-circle" cx="26" cy="26" r="25" fill="none" :stroke-width="stroke"/>\
