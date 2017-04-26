@@ -10,7 +10,7 @@
   };
 
   function url() {
-    if (App.ui.config.restApi.version === null) {
+    if (App.ui.config.std.ajax.version === null) {
       return App.ui.config.std.ajax.url;
     } else {
       return App.ui.config.std.ajax.url + '/v' + App.ui.config.std.ajax.version;
