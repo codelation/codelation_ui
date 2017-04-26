@@ -68,3 +68,12 @@ h1 {
 h2 {
   font-weight: 200;
 }
+
+@media print, screen and (max-width: 960px) {
+
+  div.wrapper {
+    width: auto;
+    margin: 20px;
+  }
+
+}
