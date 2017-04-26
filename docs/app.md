@@ -1,26 +1,5 @@
 ---
 layout: default
-links:
-  - path: "/app#conditional-javascripts"
-    text: "Conditional Javascripts"
-    bold: true
-  - path: "/app#per-controller-actionpage-javascript"
-    text: "Per Controller Action/Page Javascript"
-  - path: "/app#per-controller-javascript"
-    text: "Per Controller Javascript"
-  - path: "/app#nested-controller-actionpage-javascript"
-    text: "Nested Controller Action/Page Javascript"
-  - path: "/app#every-page-javascript"
-    text: "Every Page Javascript"
-  - path: "/app#run-first-javascript"
-    text: "Run First Javascript"
-  - path: "/app#run-last-javascript"
-    text: "Run Last Javascript"
-  - path: "/app#config-javascript"
-    text: "Config Javascript"
-  - path: "/app#ui-object"
-    text: "UI Object"
-    bold: true
 ---
 
 # App Object

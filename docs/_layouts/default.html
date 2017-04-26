@@ -25,15 +25,6 @@
         <nav>
           <div><a href="/codelation_ui">Home</a></div>
           <div><a href="/codelation_ui/app">App Object</a></div>
-          {% for link in links %}
-
-            {% if link.bold %}
-              {% assign class = "bold" %}
-            {% else %}
-              {% assign class = "" %}
-            {% endif %}
-            <div><a href="/codelation_ui/{{ link.path }}" class="{{ class }}">{{ link.text }}</a></div>
-          {% endfor %}
         </nav>
       </header>
       <section>
