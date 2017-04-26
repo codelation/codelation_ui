@@ -147,7 +147,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'percent': {
       aSign: '%',
       mDec: '0',
-      wEmpty: 'empty'
+      wEmpty: 'empty',
+      pSign: 's'
     },
     'number': {
       wEmpty: 'empty'
