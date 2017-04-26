@@ -11,10 +11,11 @@ $default-ui-color: #0366d6 !default;
 // viewport reaches the mobile-breakpoint, the columns will be stacked.
 $mobile-breakpoint: 767px !default;
 
-@import "_base_resources/bourbon/bourbon";
-@import "_base_resources/functions/**/*";
-@import "_base_resources/mixins/**/*";
-@import "_base_resources/normalize";
+@import "./base_resources/bourbon/bourbon";
+@import "./base_resources/functions/**/*";
+@import "./base_resources/mixins/**/*";
+@import "./base_resources/normalize";
+@import "./base_resources/turbolinks";
 
 // Border Box by default for all elements
 html { // http://bit.ly/1qk2tVR
