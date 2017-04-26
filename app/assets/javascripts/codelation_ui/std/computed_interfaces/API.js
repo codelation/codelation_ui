@@ -28,7 +28,11 @@ App.ui.computedInterfaces.std.API = function(model, objectString, options) {
       _APISaveFinished: function() {},
       _APIFetch: function() {
         this._APICurrentAction = "READ";
-        var request = this._getRequest(model + '/' + this.id, options);
+        var path = model;
+        if (this.id) {
+          path = path + '/' + this.id
+        }
+        var request = this._getRequest(path, options);
 
         var self = this;
         request.done(function(json) {
@@ -65,10 +69,13 @@ App.ui.computedInterfaces.std.API = function(model, objectString, options) {
       _APIUpdate: function(object, path) {
         this._APICurrentAction = "UPDATE";
         var endpoint = path || model;
-        var id = object.id;
-        var newObject = JSON.parse(JSON.stringify(object));
-        delete newObject.id;
-        var request = this._patchRequest(endpoint + '/' + id, newObject, options);
+
+        var path = endpoint;
+        if (this.id) {
+          path = path + '/' + this.id
+        }
+
+        var request = this._patchRequest(path, object, options);
         var self = this;
         request.done(function(json) {
           self._APISaveSuccessful();
