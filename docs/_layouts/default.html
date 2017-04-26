@@ -22,12 +22,12 @@
         {% endif %}
 
         <h3>Guide</h3>
-        <ul>
-          <li><a href="/codelation_ui">Home</a></li>
+        <nav>
+          <div><a href="/codelation_ui">Home</a></div>
           {% for link in links %}
-            <li><a href="/codelation_ui/{{ link.path }}">{{ link.text }}</a></li>
+            <div><a href="/codelation_ui/{{ link.path }}">{{ link.text }}</a></div>
           {% endfor %}
-        </ul>
+        </nav>
       </header>
       <section>
 
