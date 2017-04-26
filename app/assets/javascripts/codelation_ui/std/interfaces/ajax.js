@@ -42,12 +42,13 @@
   App.ui.interfaces.std.ajax = {
     methods: {
       _sendRequest: function(endpoint, method, data) {
-        var url = url() + '/' + endpoint;
+        var path = url() + '/' + endpoint;
+
         if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
           data['authenticity_token'] = App.ui.config.csrf_token;
         }
         return $.ajax({
-          url: url,
+          url: path,
           type: method || 'GET',
           data: data || {}
         });
