@@ -5,8 +5,25 @@
 
 header {
   width: auto;
-  float: auto;
+  float: none;
   position: relative;
+
+  h1 {
+    color: inherit;
+    margin: 0;
+  }
+}
+
+section {
+  width: auto;
+  float: none;
+  padding-bottom: auto;
+  flex: 5;
+}
+
+aside {
+  margin-right: 30px;
+  flex: 1;
 
   h3 {
     border-bottom: 1px solid #c6c6c6;
@@ -22,18 +39,20 @@ header {
   }
 }
 
-section {
-  width: auto;
-  float: auto;
-  padding-bottom: auto;
-  flex: 5;
-}
-
-aside {
-  margin-right: 30px;
-  flex: 1;
-}
-
 .wrapper {
   display: flex;
+  width: auto;
+  margin: 20px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, sans-serif;
+  font-weight: lighter;
+}
+
+h1,
+h2 {
+  font-weight: lighter;
 }
