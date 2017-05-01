@@ -29,7 +29,7 @@ App.ui.computedInterfaces.std.mockAPI = function(data, objectString, options) {
         this._APICurrentAction = "READ";
         var self = this;
         this.$nextTick(function() {
-          self[objectString] = data;
+          self[objectString] = JSON.parse(JSON.stringify(data));
           self._APIFetchSuccessful();
           self._APIFetchFinished();
         });
