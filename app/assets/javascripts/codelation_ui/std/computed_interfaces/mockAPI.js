@@ -19,9 +19,6 @@ App.ui.computedInterfaces.std.mockAPI = function(data, objectString, options) {
       this._APIFetch();
     },
     methods: {
-      APISuccessful: function() {},
-      APIFailed: function(error) {},
-      APIFinished: function() {},
       _APIFetchSuccessful: function() {},
       _APIFetchFailed: function(error) {},
       _APIFetchFinished: function() {},
