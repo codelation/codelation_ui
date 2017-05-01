@@ -278,6 +278,18 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       } catch (err) {}
     },
     watch: {
+      value: function() {
+        // set the initial value
+        if (this.isDate) {
+          if (this._valueIsEmpty(this.value)) {
+            this.inputValue = this.value;
+          } else {
+            this.inputValue = moment(this.value).format(this._formatForDate());
+          }
+        } else {
+          this.inputValue = this.value;
+        }
+      },
       forcedError: {
         handler: function() {
           this.validateContent();
