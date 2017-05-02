@@ -44,14 +44,30 @@
       _sendRequest: function(endpoint, method, data) {
         var path = url() + '/' + endpoint;
 
-        if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
-          data['authenticity_token'] = App.ui.config.csrf_token;
+        if (data instanceof(FormData)) {
+          if (!App.ui.config.std.ajax.skipAuthenticityToken) {
+            data.append('authenticity_token', App.ui.config.csrf_token);
+          }
+          
+          return $.ajax({
+              url: path,
+              data: data || new FormData(),
+              processData: false,
+              type: method || 'POST',
+              contentType: 'multipart/form-data', 
+              mimeType: 'multipart/form-data'
+          });
+        }else{
+          if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
+            data['authenticity_token'] = App.ui.config.csrf_token;
+          }
+
+          return $.ajax({
+            url: path,
+            type: method || 'GET',
+            data: data || {}
+          });
         }
-        return $.ajax({
-          url: path,
-          type: method || 'GET',
-          data: data || {}
-        });
       },
       _getRequest: function(endpoint, options) {
         var requestUrl = endpoint + queryStringFromOptions(options, App.ui.config.std.ajax.options);
