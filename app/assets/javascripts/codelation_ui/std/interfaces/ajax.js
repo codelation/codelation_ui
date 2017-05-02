@@ -54,8 +54,7 @@
               data: data || new FormData(),
               type: method || 'POST',
               processData: false,
-              contentType: false,
-              dataType: "json"
+              contentType: false
           });
         }else{
           if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
