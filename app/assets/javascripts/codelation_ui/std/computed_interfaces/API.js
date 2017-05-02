@@ -1,4 +1,4 @@
-App.ui.computedInterfaces.std.API = function(model, objectString, options) {
+App.ui.computedInterfaces.std.API = function(model, objectString, options, initialFetch) {
   return {
     mixins: [App.ui.interfaces.std.ajax],
     data: function() {
@@ -17,7 +17,9 @@ App.ui.computedInterfaces.std.API = function(model, objectString, options) {
       }
     },
     ready: function() {
-      this._APIFetch();
+      if (initialFetch === undefined || initialFetch === true) {
+        this._APIFetch();
+      }
     },
     methods: {
       _APIFetchSuccessful: function() {},
