@@ -1,4 +1,4 @@
-App.ui.computedInterfaces.std.mockAPI = function(data, objectString, options) {
+App.ui.computedInterfaces.std.mockAPI = function(data, objectString, options, initialFetch) {
   return {
     data: function() {
       return {
@@ -16,7 +16,9 @@ App.ui.computedInterfaces.std.mockAPI = function(data, objectString, options) {
       }
     },
     ready: function() {
-      this._APIFetch();
+      if (initialFetch === undefined || initialFetch === true) {
+        this._APIFetch();
+      }
     },
     methods: {
       _APIFetchSuccessful: function() {},
