@@ -52,10 +52,10 @@
           return $.ajax({
               url: path,
               data: data || new FormData(),
-              processData: false,
               type: method || 'POST',
-              contentType: 'multipart/form-data', 
-              mimeType: 'multipart/form-data'
+              processData: false,
+              contentType: false,
+              dataType: "json"
           });
         }else{
           if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
