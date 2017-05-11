@@ -29,6 +29,8 @@
     },
     methods: {
       _formValidationRespondToForm: function() {
+        console.log("RESPONDED complete?", this.form.formValidationResponded === this.form.formValidationInputs);
+        console.log("VALID", this.form.formValidationValid);
         if (this.form.formValidationWatch && this.form.formValidationResponded === this.form.formValidationInputs) {
           if (this.form.formValidationValid && typeof this.form.formValidationValidAction === 'function') {
             this.form.formValidationValidAction();

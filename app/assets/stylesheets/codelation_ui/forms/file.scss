@@ -1,0 +1,14 @@
+.ui-file {
+  .ui-file-dropzone {
+    border: 2px dashed #bbb;
+    border-radius: .3em;
+    padding: 1.5em;
+    text-align: center;
+    color: #bbb;
+
+    &.active {
+      color: #999;
+      border-color: #999;
+    }
+  }
+}

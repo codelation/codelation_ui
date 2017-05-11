@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "codelation_ui"
-  s.version     = "1.1.13"
+  s.version     = "1.1.14"
   s.authors     = ["Jake Humphrey"]
   s.email       = ["jake@codelation.com"]
   s.homepage    = "https://github.com/codelation/codelation_ui"
@@ -21,5 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "autoprefixer-rails", "~> 6.7"
   s.add_dependency "turbolinks", "~> 2.5"
   s.add_dependency "uglifier", "~> 2.7"
+  s.add_dependency "mini_magick", "~> 4.7"
+  s.add_dependency "aws-sdk", "~> 2"
   s.add_development_dependency "rake"
 end

@@ -7,6 +7,7 @@
 
     // All vue components inherit this.  Used to show the vue page after the js loads
     Vue.mixin({
+      el: App.ui.config.main.rootComponentNode,
       mixins: App.ui.config.main.includedInterfaces,
       components: App.ui.globalComponents
     });
