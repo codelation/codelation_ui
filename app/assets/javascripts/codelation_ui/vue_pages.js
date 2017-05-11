@@ -32,8 +32,8 @@
       });
     }
 
-    if (App.ui.root.el === null) {
-      App.ui.root.el = App.ui.config.main.rootComponentNode;
+    if (App.ui.root.$el === null) {
+      App.ui.root.$el = App.ui.config.main.rootComponentNode;
     }
   }).exit(function() {
     // Destroy Root
