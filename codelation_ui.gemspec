@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "codelation_ui"
-  s.version     = "1.1.14"
+  s.version     = "1.1.15"
   s.authors     = ["Jake Humphrey"]
   s.email       = ["jake@codelation.com"]
   s.homepage    = "https://github.com/codelation/codelation_ui"
