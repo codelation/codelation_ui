@@ -30,4 +30,12 @@ class FileProcessor
     obj = s3.bucket(ENV['AWS_BUCKET']).object(aws_file)
     obj.delete
   end
+
+  def self.read(file)
+    s3 = Aws::S3::Resource.new()
+    aws_file = file.sub("https://#{ENV['AWS_BUCKET']}.s3-us-west-2.amazonaws.com/", "")
+    obj = s3.bucket(ENV['AWS_BUCKET']).object(aws_file)
+    result = obj.get
+    result.body
+  end
 end
