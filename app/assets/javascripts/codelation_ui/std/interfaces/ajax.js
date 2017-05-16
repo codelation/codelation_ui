@@ -43,6 +43,34 @@
     methods: {
       _sendRequest: function(endpoint, method, data) {
         var path = url() + '/' + endpoint;
+        
+        // TODO: Implement all requests as form data.  Make file uploading much better
+//         function jsonToFormData (inJSON, inTestJSON, inFormData, parentKey) {
+//             // http://stackoverflow.com/a/22783314/260665
+//             // Raj: Converts any nested JSON to formData.
+//             var form_data = inFormData || new FormData();
+//             var testJSON = inTestJSON || {};
+//             for ( var key in inJSON ) {
+//                 // 1. If it is a recursion, then key has to be constructed like "parent.child" where parent JSON contains a child JSON
+//                 // 2. Perform append data only if the value for key is not a JSON, recurse otherwise!
+//                 var constructedKey = key;
+//                 if (parentKey) {
+//                     constructedKey = parentKey + "." + key;
+//                 }
+
+//                 var value = inJSON[key];
+//                 if (value && value.constructor === {}.constructor) {
+//                     // This is a JSON, we now need to recurse!
+//                     jsonToFormData (value, testJSON, form_data, constructedKey);
+//                 } else {
+//                     form_data.append(constructedKey, inJSON[key]);
+//                     testJSON[constructedKey] = inJSON[key];
+//                 }
+//             }
+//             return form_data;
+//         }
+        
+        
 
         if (data instanceof(FormData)) {
           if (!App.ui.config.std.ajax.skipAuthenticityToken) {
@@ -54,7 +82,8 @@
               data: data || new FormData(),
               type: method || 'POST',
               processData: false,
-              contentType: false
+              contentType: false,
+              dataType: 'json'
           });
         }else{
           if (!App.ui.config.std.ajax.skipAuthenticityToken && data) {
