@@ -260,6 +260,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       } else {
         this.inputValue = this.value;
       }
+      
+      this.inputValue = this.inputValue || null;
 
       this.renderHTML = true;
       var self = this;
