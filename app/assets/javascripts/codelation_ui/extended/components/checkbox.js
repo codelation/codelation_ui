@@ -3,7 +3,7 @@
 
   App.ui.components.extended.checkbox = Vue.extend({
     template: ' <div class="ui ui-checkbox" :class="[disabled ? \'ui-disabled\' : \'\']">\
-                  <input :disabled="disabled" name="{{ name }}" type="checkbox" v-model="value">\
+                  <input :id="id" :disabled="disabled" name="{{ name }}" type="checkbox" v-model="value">\
                   <label for="{{ id }}" v-on:click="toggle()"></label>\
                 </div>\
     ',
