@@ -4,7 +4,7 @@
   App.ui.components.extended.toggle = Vue.extend({
     template: ' <div class="ui ui-toggle" :class="[disabled ? \'ui-disabled\' : \'\']">\
                   <input :id="id" :disabled="disabled" name="{{ name }}" type="checkbox" v-model="value">\
-                  <label for="{{ id }}" v-on:click="toggle()"></label>\
+                  <label v-on:click="toggle()"></label>\
                 </div>\
     ',
     props: {
