@@ -26,7 +26,7 @@ $checkbox-size: 1.25em !default;
       height: $checkbox-size;
       width: $checkbox-size;
       line-height: $checkbox-size;
-      font-size: 1em;
+      font-size: 1em !important;
       @include user-select(none);
 
       &:before {
