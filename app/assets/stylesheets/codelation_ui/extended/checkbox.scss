@@ -1,10 +1,13 @@
 $checkbox-color: $default-ui-color !default;
 $checkbox-border-color: #5a5a5a !default;
-$checkbox-size: 1.3em !default;
+$checkbox-size: 1.25em !default;
 
 .ui.ui-checkbox {
   display: inline-block;
-
+  height: $checkbox-size;
+  width: $checkbox-size;
+  line-height: $checkbox-size;
+  
   &.ui-disabled {
     opacity: 0.7;
 
@@ -19,9 +22,9 @@ $checkbox-size: 1.3em !default;
     & + label {
       position: relative;
       cursor: pointer;
-      display: inline-block;
-      width: 1.25em;
-      line-height: 1.25em;
+      display: inline;
+      width: inherit;
+      line-height: inherit;
       font-size: 1em;
       @include user-select(none);
 
@@ -30,9 +33,9 @@ $checkbox-size: 1.3em !default;
         position: absolute;
         top: 0;
         left: 0;
-        height: 1.25em;
-        width: 1.25em;
-        line-height: 1.25em;
+        height: inherit;
+        width: inherit;
+        line-height: inherit;
         z-index: 0;
         border: 2px solid $checkbox-border-color;
         border-radius: 1px;
@@ -64,8 +67,8 @@ $checkbox-size: 1.3em !default;
       }
 
       &:after {
-        height: 1.25em;
-        width: 1.25em;
+        height: inherit;
+        width: inherit;
         background-color: transparent;
         border: 2px solid $checkbox-border-color;
         top: 0px;
@@ -94,8 +97,8 @@ $checkbox-size: 1.3em !default;
 
       &:after {
         top: 0;
-        width: 1.25em;
-        height: 1.25em;
+        width: inherit;
+        height: inherit;
         border: 2px solid $checkbox-color;
         background-color: $checkbox-color;
         z-index: 0;
