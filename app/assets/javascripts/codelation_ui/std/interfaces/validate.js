@@ -12,6 +12,17 @@
           return false;
         }
       },
+      _formatForUrl: function() {
+        return "http://example.com";
+      },
+      _valueIsUrl: function(url) {
+        var r = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/;
+        if (r.text(url)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       _formatForDate: function() {
         return 'MM/DD/YYYY';
       },
