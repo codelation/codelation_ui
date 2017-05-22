@@ -6,29 +6,49 @@ class FileProcessor
     size = args[:size] || args["size"]
     path = args[:path] || args["path"] || DateTime.now.strftime('%Y-%m-%d')
     priv = args[:private] || args["private"] || false
-    t_file = file.tempfile
-    if size && file.content_type.match(/image\/.*/) && !file.content_type.include?("svg")
-      parseFile = MiniMagick::Image.new(t_file.path).resize size
-      ap parseFile
-      t_file = parseFile
-    end
-
-    s3 = Aws::S3::Resource.new()
-
-    name = "#{path}/#{SecureRandom.uuid}--#{file.original_filename}"
-    obj = s3.bucket(ENV['AWS_BUCKET']).object(name)
-    File.open(t_file.path) do |f|
+    filename = args[:name] || args["name"]
+    
+    if file.is_a?(String)
+      return if name.nil?
+      s3 = Aws::S3::Resource.new()
+      
+      name = "#{path}/#{filename}"
+      obj = s3.bucket(ENV['AWS_BUCKET']).object(name)
       if priv
-        obj.put(body: f)
+        obj.put(body: file)
       else
-        obj.put(body: f, acl: "public-read")
+        obj.put(body: file, acl: "public-read")
       end
-    end
 
-    {
-      name: file.original_filename,
-      url: obj.public_url
-    }
+      {
+        name: filename,
+        url: obj.public_url
+      }
+    else
+      t_file = file.tempfile
+      if size && file.content_type.match(/image\/.*/) && !file.content_type.include?("svg")
+        parseFile = MiniMagick::Image.new(t_file.path).resize size
+        ap parseFile
+        t_file = parseFile
+      end
+
+      s3 = Aws::S3::Resource.new()
+      obj_name = filename || file.original_filename
+      name = "#{path}/#{SecureRandom.uuid}--#{obj_name}"
+      obj = s3.bucket(ENV['AWS_BUCKET']).object(name)
+      File.open(t_file.path) do |f|
+        if priv
+          obj.put(body: f)
+        else
+          obj.put(body: f, acl: "public-read")
+        end
+      end
+
+      {
+        name: obj_name,
+        url: obj.public_url
+      }
+    end
   end
 
   def self.delete(file)
