@@ -1,8 +1,11 @@
 require 'aws-sdk'
 require 'mini_magick'
 class FileProcessor
-  def self.upload(file, size = nil)
+  def self.upload(file, args = {})
     return if file == "" || file.nil?
+    size = args[:size] || args["size"]
+    path = args[:path] || args["path"] || DateTime.now.strftime('%Y-%m-%d')
+    priv = args[:private] || args["private"] || false
     t_file = file.tempfile
     if size && file.content_type.match(/image\/.*/) && !file.content_type.include?("svg")
       parseFile = MiniMagick::Image.new(t_file.path).resize size
@@ -12,10 +15,14 @@ class FileProcessor
 
     s3 = Aws::S3::Resource.new()
 
-    name = "#{DateTime.now.strftime('%Y-%m-%d')}/#{SecureRandom.uuid}--#{file.original_filename}"
+    name = "#{path}/#{SecureRandom.uuid}--#{file.original_filename}"
     obj = s3.bucket(ENV['AWS_BUCKET']).object(name)
     File.open(t_file.path) do |f|
-      obj.put(body: f, acl: "public-read")
+      if priv
+        obj.put(body: f)
+      else
+        obj.put(body: f, acl: "public-read")
+      end
     end
 
     {
