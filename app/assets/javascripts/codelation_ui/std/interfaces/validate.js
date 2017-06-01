@@ -16,7 +16,7 @@
         return "http://example.com";
       },
       _valueIsUrl: function(url) {
-        var r = /^(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/;
+        var r = /^((http|https):\/\/)?[\w-]+(\.[\w-]{2,})+(\/[\w-]*)*(\?([\w-%]+=[\w-%]+)(&([\w-%]+=[\w-%]+))*)?/i;
         if (r.test(url)) {
           return true;
         } else {
