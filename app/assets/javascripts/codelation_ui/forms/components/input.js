@@ -147,7 +147,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     }
   }
 
-  App.ui.components.forms.custom_input = Vue.extend({
+  App.ui.components.forms.input = Vue.extend({
     mixins: [App.ui.interfaces.forms.input, App.ui.interfaces.std.validate, App.ui.interfaces.std.helpers, App.ui.interfaces.std.date],
     template: template,
     props: {
