@@ -71,22 +71,15 @@ Used to remove the icon if the field has one.  Only effects Date types right now
 
   var template = '<div class="vue-input" :class="[message ? \'has-message\' : \'\', disabled ? \'disabled\' : \'\', type]">\
                     <i v-if="inputIcon" v-on:click="activeObject()" class="vue-input-icon fa" :class="[inputIcon]"></i>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-model="inputValue" :placeholder="placeholder" v-el:input>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-model="inputValue" :placeholder="placeholder" v-el:input>\
-                    <input :disabled="disabled" id="{{ id}}" type="password" name="{{ name }}" v-if="showInputFor(\'password\')" v-model="inputValue" :placeholder="placeholder" v-el:input>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input v-model="inputValue" :placeholder="placeholder">\
-                    <input :disabled="disabled" id="{{ id}}" type="checkbox" name="{{ name }}" v-if="showInputFor(\'bool\')" v-el:input v-model="inputValue">\
-                    <input :disabled="disabled" id="{{ id}}" type="radio" name="{{ name }}" v-if="showInputFor(\'radio\')" v-el:input v-model="inputValue">\
-                    <select :disabled="disabled" id="{{ id}}" v-if="showInputFor(\'select\')" v-model="inputValue" name="{{ name }}">\
-                      <option v-for="option in optionsForSelect" :value="optionValue(option)">{{ optionLabel(option) }}</option>\
-                    </select>\
-                    <span v-if="showInputFor(\'toggle\')" class="vue-input-toggle">\
-                      <input :disabled="disabled" id="{{ id}}" name="{{ name }}" type="checkbox" v-model="inputValue">\
-                      <label for="{{ id}}"></label>\
-                    </span>\
-                    <div v-if="message" class="vue-input-message-container">\
-                      <i class="fa fa-exclamation-triangle"></i><div><h5>{{ message }}</h5><p v-if="inputFormat">Format: {{ inputFormat }}</p></div>\
-                    </div>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="password" name="{{ name }}" v-if="showInputFor(\'password\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.enter="inputChange()" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input :placeholder="placeholder">\
+                    <template v-if="showAlert">\
+                      <div v-if="message" class="vue-input-message-container">\
+                        <i class="fa fa-exclamation-triangle"></i><div><h5>{{ message }}</h5><p v-if="inputFormat">Format: {{ inputFormat }}</p></div>\
+                      </div>\
+                    </template>\
                   </div>'
 
   var inputTypeMap = {
@@ -101,16 +94,13 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'check': 'bool',
     'checkbox': 'bool',
     'boolean': 'bool',
-    'toggle': 'toggle',
     'text': 'text',
     'email': 'text',
     'phone': 'text',
     'password': 'password',
     'pass': 'password',
-    'option': 'radio',
-    'radio': 'radio',
-    'select': 'select',
-    'list': 'select'
+    'website': 'url',
+    'url': 'url'
   }
 
   var dataTypeMap = {
@@ -126,11 +116,9 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'bool': 'bool',
     'check': 'bool',
     'boolean': 'bool',
-    'toggle': 'toggle',
     'text': 'string',
-    'password': 'password',
-    'radio': 'radio',
-    'select': 'select'
+    'url': 'string',
+    'password': 'password'
   }
 
   var autoNumericDefault = {
@@ -159,8 +147,8 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     }
   }
 
-  App.ui.components.forms.input = Vue.extend({
-    mixins: [App.ui.interfaces.forms.input, App.ui.interfaces.std.validate, App.ui.interfaces.std.helpers],
+  App.ui.components.forms.custom_input = Vue.extend({
+    mixins: [App.ui.interfaces.forms.input, App.ui.interfaces.std.validate, App.ui.interfaces.std.helpers, App.ui.interfaces.std.date],
     template: template,
     props: {
       'type': {
@@ -223,6 +211,9 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       'name': {
         default: null
       },
+      'showAlert': {
+        default: true
+      },
       'optionsForSelect': {
         default: function() {
           return [];
@@ -237,12 +228,11 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         inputValue: null,
         message: null,
         inputFormat: null,
-        validating: false,
+        validating: true,
         formatting: true,
         renderHTML: false,
         obj: null,
-        showInput: false,
-        initialValue: this.value,
+        showInput: false
       }
     },
     ready: function() {
@@ -250,36 +240,44 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         this.id = this._randomId();
       }
 
-      // set the initial value
-      if (this.isDate) {
-        if (this._valueIsEmpty(this.value)) {
-          this.inputValue = this.value;
-        } else {
-          this.inputValue = moment(this.value).format(this._formatForDate());
-        }
-      } else {
-        this.inputValue = this.value;
-      }
-      
-      this.inputValue = this.inputValue || null;
-
       this.renderHTML = true;
       var self = this;
       this.$nextTick(function() {
-        self.setupNumber();
-        self.setupDate();
-        self.validating = true;
+        self.$els.input.value = self.value;
+        var x = window.scrollX,
+          y = window.scrollY;
+        self.$els.input.focus();
+        window.scrollTo(x, y);
+        self.$els.input.blur();
+        self.setupInputFormatter();
+        self.setValue(self.value);
         $(self.$els.input).on('focus', self.validateContent);
+        $(self.$els.input).on('change', self.validateContent);
+        $(self.$els.input).on('keyup', self.inputKeyPress);
+        $(self.$els.input).on('paste', function() {
+          setTimeout(function() {
+            self.inputChange();
+          }, 100);
+        });
       });
     },
     beforeDestroy: function() {
       try {
         $(self.$els.input).off('focus');
+        $(self.$els.input).off('keyup');
+        $(self.$els.input).off('paste');
         $(this.$els.input).autoNumeric('destroy');
         this.obj.destroy();
       } catch (err) {}
     },
     watch: {
+      value: function(newValue, oldValue) {
+        if (newValue === oldValue || newValue === this.getValue()) {
+          return;
+        }
+
+        this.setValue(newValue);
+      },
       forcedError: {
         handler: function() {
           this.validateContent();
@@ -291,30 +289,69 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           this.validateContent();
         }
       },
-      inputValue: function(newValue) {
-        if (this.toString) {
-          this.value = String(newValue);
-        } else if (this.isDate) {
-          if (this._valueIsEmpty(newValue)) {
-            this.value = null;
-          } else {
-            this.value = new Date(newValue);
-          }
-        } else if (this.isNumber) {
-          try {
-            this.value = $(this.$els.input).autoNumeric('get');
-          } catch (e) {
-            this.value = newValue;
-          }
-        } else {
-          this.value = newValue;
+      inputValue: function(newValue, oldValue) {
+        if (newValue === oldValue || newValue === this.value) {
+          return;
         }
-        this.formatContent();
+
+        this.setParent(newValue);
         this.validateContent();
       }
     },
     methods: {
-      setupDate: function() {
+      setParent: function(value) {
+        // Sets the parent value based on the params given
+        if (this._valueIsEmpty(value)) {
+          this.value = null;
+        } else if (this.toString) {
+          if (this.isDate) {
+            if (this._valueIsDate(value)) {
+              this.value = this._moment(value).format(this._formatForDate());
+            }
+          } else {
+            this.value = String(value);
+          }
+        } else {
+          this.value = value;
+        }
+      },
+      inputKeyPress: function(e) {
+        if (e.which <= 90 && e.which >= 48 || e.which >= 96 && e.which <= 111 || e.which >= 186 && e.which <= 222 || e.which === 8 || e.which === 13 || e.which === 46 || e.which === 45) {
+          this.inputChange();
+        }
+      },
+      inputChange: function() {
+        this.inputValue = this.getValue();
+        this.formatContent();
+      },
+      setValue: function(value) {
+        // Sets the input value
+        if (this.isNumber) {
+          try {
+            $(this.$els.input).autoNumeric('set', value);
+          } catch (e) {
+            this.$els.input.value = value;
+          }
+        } else if (this.isDate) {
+          this.obj.setDate(value);
+        } else {
+          this.$els.input.value = value;
+        }
+      },
+      getValue: function() {
+        // Gets the value from the input and puts it in the correct type
+        if (this.isNumber) {
+          try {
+            return numeral($(this.$els.input).autoNumeric('get')).value();
+          } catch (e) {
+            return numeral(this.$els.input.value).value();
+          }
+        }
+
+        return this.$els.input.value;
+      },
+      setupInputFormatter: function() {
+        // Sets up autonumeric for numbers and pikaday for dates
         if (this.isDate) {
           var options = {
             field: this.$els.input,
@@ -328,11 +365,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
             options['minDate'] = new Date(this.min);
           }
           this.obj = new Pikaday(options);
-        }
-      },
-      setupNumber: function() {
-        if (this.isNumber) {
-
+        } else if (this.isNumber) {
           // Set options
           var baseOptions = JSON.parse(JSON.stringify(autoNumericDefault));
           var additionals = numericDefaults[this.type] || numericDefaults[this.dataType] || {};
@@ -363,10 +396,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
             $(this.$els.input).autoNumeric('destroy');
           } catch (err) {}
 
-          $(this.$els.input).autoNumeric('init', baseOptions).on('keyup', function() {
-            self.value = $(self.$els.input).autoNumeric('get');
-          });
-          $(this.$els.input).autoNumeric('set', this.inputValue);
+          $(this.$els.input).autoNumeric('init', baseOptions);
         }
       },
       showInputFor: function(type) {
@@ -383,8 +413,15 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           }
 
           if (this.isNumber) {
-            if (this.inputValue < this.max) {
-              this.inputValue++;
+            var tmp = this.getValue();
+            if (this.max) {
+              if (tmp < this.max) {
+                this.setValue(tmp + 1);
+                this.inputChange();
+              }
+            } else {
+              this.setValue(tmp + 1);
+              this.inputChange();
             }
           }
         }
@@ -396,8 +433,15 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           }
 
           if (this.isNumber) {
-            if (this.inputValue > this.min) {
-              this.inputValue--;
+            var tmp = this.getValue();
+            if (this.min) {
+              if (tmp > this.min) {
+                this.setValue(tmp - 1);
+                this.inputChange();
+              }
+            } else {
+              this.setValue(tmp - 1);
+              this.inputChange();
             }
           }
         }
@@ -410,15 +454,16 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       formatContent: function() {
         if (this.formatting) {
           if (this.type === 'phone' && this._valueIsPhone(this.inputValue)) {
-            this.inputValue = App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue);
+            this.setvalue(App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue));
           }
         }
       },
       validateContent: function() {
+        var value = this.getValue();
         this.message = null;
         this.inputFormat = null;
         if (this.validating && !this.disabled) {
-          if (this._valueIsEmpty(this.inputValue)) {
+          if (this._valueIsEmpty(value)) {
             if (this.required) {
               this.message = "This can't be empty";
               this.inputFormat = this._formatForEmpty();
@@ -428,31 +473,38 @@ Used to remove the icon if the field has one.  Only effects Date types right now
 
           if (this.validate) {
             if (this.type === 'email') {
-              var res = this._valueIsEmail(this.inputValue);
+              var res = this._valueIsEmail(value);
               if (!res) {
                 this.message = "Not a valid email address.";
                 this.inputFormat = this._formatForEmail();
                 return false;
               }
             } else if (this.type === 'phone') {
-              var res = this._valueIsPhone(this.inputValue);
+              var res = this._valueIsPhone(value);
               if (!res) {
                 this.message = "Not a valid phone number.";
                 this.inputFormat = this._formatForPhone();
                 return false;
               }
+            } else if (this.type === 'url') {
+              var res = this._valueIsUrl(value);
+              if (!res) {
+                this.message = "Not a valid URL.";
+                this.inputFormat = this._formatForUrl();
+                return false;
+              }
             } else if (this.isDate) {
-              var res = this._valueIsDate(this.inputValue);
+              var res = this._valueIsDate(value);
               if (!res) {
                 this.message = "Not a valid date.";
                 this.inputFormat = this._formatForDate();
                 return false;
               }
             } else if (this.isNumber) {
-              if (this.hasUnrestrictedMax && numeral(this.inputValue).value() > this.max) {
+              if (this.hasUnrestrictedMax && numeral(value).value() > this.max) {
                 this.message = "Number out of range.";
                 this.inputFormat = "less than or equal to " + this.max;
-              } else if (this.hasUnrestrictedMin && numeral(this.inputValue).value() < this.min) {
+              } else if (this.hasUnrestrictedMin && numeral(value).value() < this.min) {
                 this.message = "Number out of range.";
                 this.inputFormat = "greater than or equal to " + this.min;
               }
