@@ -71,7 +71,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
 
   var template = '<div class="vue-input" :class="[message ? \'has-message\' : \'\', disabled ? \'disabled\' : \'\', type]">\
                     <i v-if="inputIcon" v-on:click="activeObject()" class="vue-input-icon fa" :class="[inputIcon]"></i>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="releaseIncrDecrKey()" v-on:keyup.down="releaseIncrDecrKey()" v-on:keydown.up="holdIncrKey()" v-on:keydown.down="holdDecrKey()" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="password" name="{{ name }}" v-if="showInputFor(\'password\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.enter="inputChange()" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input :placeholder="placeholder">\
@@ -232,7 +232,10 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         formatting: true,
         renderHTML: false,
         obj: null,
-        showInput: false
+        showInput: false,
+        incrInterval: null,
+        incrTimeout: null,
+        holdKey: false
       }
     },
     ready: function() {
@@ -405,6 +408,32 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         }
 
         return this.dataType === type;
+      },
+      holdIncrKey: function() {
+        if (!this.holdKey) {
+          this.holdKey = true;
+          this.incrementValue();
+          var self = this;
+          this.incrTimeout = setTimeout(function() {
+            self.incrInterval = window.setInterval(self.incrementValue, 100);
+          }, 500);
+        }
+      },
+      holdDecrKey: function() {
+        if (!this.holdKey) {
+          this.holdKey = true;
+          this.decrementValue();
+          var self = this;
+          this.incrTimeout = setTimeout(function() {
+            self.incrInterval = window.setInterval(self.decrementValue, 100);
+          }, 500);
+        }
+      },
+      releaseIncrDecrKey: function() {
+        this.holdKey = false;
+        window.clearTimeout(this.incrTimeout);
+        window.clearInterval(this.incrInterval);
+        this.incrInterval = null;
       },
       incrementValue: function() {
         if (this.keyCodes) {
