@@ -483,7 +483,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       formatContent: function() {
         if (this.formatting) {
           if (this.type === 'phone' && this._valueIsPhone(this.inputValue)) {
-            this.setvalue(App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue));
+            this.setValue(App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue));
           }
         }
       },
