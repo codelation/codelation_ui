@@ -16,9 +16,9 @@
     component: []
   };
   
-  function matchBodyClasses(bodyClasses) {
-    bodyClasses = " " + bodyClasses + " ";
-    if (" " + bodyElement.className + " ").includes(bodyClasses)) {
+  function matchBodyClasses(element, classes) {
+    classes = " " + classes + " ";
+    if (" " + element.className + " ").includes(classes)) {
       return true; 
     }else{
       return false;
@@ -81,7 +81,7 @@
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
+      if (bodyClass === 'component' || matchBodyClasses(bodyElement, bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
@@ -122,7 +122,7 @@
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {      
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
+      if (bodyClass === 'component' || matchBodyClasses(bodyElement, bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
