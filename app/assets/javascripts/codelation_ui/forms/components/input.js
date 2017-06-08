@@ -249,13 +249,18 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         self.$els.input.value = self.value;
         var x = window.scrollX,
           y = window.scrollY;
+        var focusedNode = $(':focus')[0];
         self.$els.input.focus();
         window.scrollTo(x, y);
         self.$els.input.blur();
+        if (focusedNode) {
+          focusedNode.focus();
+        }
         self.setupInputFormatter();
         self.setValue(self.value);
         $(self.$els.input).on('focus', self.validateContent);
-        $(self.$els.input).on('change', self.validateContent);
+        $(self.$els.input).on('focusout', self.releaseIncrDecrKey);
+        $(self.$els.input).on('change', self.updateAndValidateContent);
         $(self.$els.input).on('keyup', self.inputKeyPress);
         $(self.$els.input).on('paste', function() {
           setTimeout(function() {
@@ -267,6 +272,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     beforeDestroy: function() {
       try {
         $(self.$els.input).off('focus');
+        $(self.$els.input).off('focusout');
         $(self.$els.input).off('keyup');
         $(self.$els.input).off('paste');
         $(this.$els.input).autoNumeric('destroy');
@@ -275,7 +281,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     },
     watch: {
       value: function(newValue, oldValue) {
-        if (newValue === oldValue || newValue === this.getValue()) {
+        if (String(newValue) === String(oldValue) || String(newValue) === String(this.getValue())) {
           return;
         }
 
@@ -293,7 +299,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         }
       },
       inputValue: function(newValue, oldValue) {
-        if (newValue === oldValue || newValue === this.value) {
+        if (String(newValue) === String(oldValue) || String(newValue) === String(this.value)) {
           return;
         }
 
@@ -335,7 +341,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           } catch (e) {
             this.$els.input.value = value;
           }
-        } else if (this.isDate) {
+        } else if (this.isDate && this.obj !== null) {
           this.obj.setDate(value);
         } else {
           this.$els.input.value = value;
@@ -345,10 +351,22 @@ Used to remove the icon if the field has one.  Only effects Date types right now
         // Gets the value from the input and puts it in the correct type
         if (this.isNumber) {
           try {
-            return numeral($(this.$els.input).autoNumeric('get')).value();
+            var val = $(this.$els.input).autoNumeric('get');
+            if (this._valueIsEmpty(val)) {
+              return null;
+            } else {
+              return numeral(val).value();
+            }
           } catch (e) {
-            return numeral(this.$els.input.value).value();
+            var val = this.$els.input.value;
+            if (this._valueIsEmpty(val)) {
+              return null;
+            } else {
+              return numeral(val).value();
+            }
           }
+        } else if (this.isDate && this.obj !== null) {
+          return this.obj.getDate();
         }
 
         return this.$els.input.value;
@@ -486,6 +504,11 @@ Used to remove the icon if the field has one.  Only effects Date types right now
             this.setValue(App.ui.interfaces.std.format.methods._formatToPhoneNumber(this.inputValue));
           }
         }
+      },
+      updateAndValidateContent: function() {
+        this.inputValue = this.getValue();
+        this.formatContent();
+        this.validateContent();
       },
       validateContent: function() {
         var value = this.getValue();
