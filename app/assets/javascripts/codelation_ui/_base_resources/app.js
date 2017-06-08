@@ -72,6 +72,7 @@
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
       bodyClass = " " + (key.split('.').join(' ')) + " ";
+      console.log("MATCH", bodyClass, (" " + bodyElement.className + " "), (" " + bodyElement.className + " ").includes(bodyClass));
       if (bodyClass === 'component' || (" " + bodyElement.className + " ").includes(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
