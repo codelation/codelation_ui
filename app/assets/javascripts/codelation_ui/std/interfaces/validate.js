@@ -27,6 +27,9 @@
         return 'MM/DD/YYYY';
       },
       _valueIsDate: function(date) {
+        if (date && date instanceOf Date) {
+          return true;
+        }
         var r = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d\d\d\d$/;
         if (r.test(date)) {
           return true;
