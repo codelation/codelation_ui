@@ -5,6 +5,14 @@ $toggle-switch-size: 1.3em;
 .vue-input {
   display: inline-block;
   position: relative;
+  
+  input::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+  }
 
   .vue-input-icon {
     position: absolute;
@@ -75,14 +83,6 @@ $toggle-switch-size: 1.3em;
         &:after {
           margin-left: $toggle-switch-size;
         }
-      }
-      
-      &::-webkit-contacts-auto-fill-button {
-        visibility: hidden;
-        display: none !important;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
       }
     }
 
