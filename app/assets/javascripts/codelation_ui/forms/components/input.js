@@ -80,7 +80,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                         <i class="fa fa-exclamation-triangle"></i><div><h5>{{ message }}</h5><p v-if="inputFormat">Format: {{ inputFormat }}</p></div>\
                       </div>\
                     </template>\
-                  </div>'
+                  </div>';
 
   var inputTypeMap = {
     'money': 'money',
@@ -246,27 +246,32 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       this.renderHTML = true;
       var self = this;
       this.$nextTick(function() {
-        self.$els.input.value = self.value;
-        var x = window.scrollX,
-          y = window.scrollY;
-        var focusedNode = $(':focus')[0];
-        self.$els.input.focus();
-        window.scrollTo(x, y);
-        self.$els.input.blur();
-        if (focusedNode) {
-          focusedNode.focus();
+        if (self.$els.input === undefined) {
+          console.warn("Component not loaded")
+        } else {
+          self.$els.input.value = self.value;
+          var x = window.scrollX,
+            y = window.scrollY;
+          var focusedNode = $(':focus')[0];
+          self.$els.input.focus();
+          window.scrollTo(x, y);
+          self.$els.input.blur();
+          if (focusedNode) {
+            focusedNode.focus();
+          }
+          self.setupInputFormatter();
+          self.setValue(self.value);
+          $(self.$els.input).on('focus', self.validateContent);
+          $(self.$els.input).on('focusout', self.releaseIncrDecrKey);
+          $(self.$els.input).on('change', self.updateAndValidateContent);
+          $(self.$els.input).on('keyup', self.inputKeyPress);
+          $(self.$els.input).on('paste', function() {
+            setTimeout(function() {
+              self.inputChange();
+            }, 100);
+          });
         }
-        self.setupInputFormatter();
-        self.setValue(self.value);
-        $(self.$els.input).on('focus', self.validateContent);
-        $(self.$els.input).on('focusout', self.releaseIncrDecrKey);
-        $(self.$els.input).on('change', self.updateAndValidateContent);
-        $(self.$els.input).on('keyup', self.inputKeyPress);
-        $(self.$els.input).on('paste', function() {
-          setTimeout(function() {
-            self.inputChange();
-          }, 100);
-        });
+
       });
     },
     beforeDestroy: function() {
