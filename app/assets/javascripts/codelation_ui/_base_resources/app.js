@@ -15,6 +15,15 @@
   app.exitFunctions = {
     component: []
   };
+  
+  function matchBodyClasses(bodyClasses) {
+    bodyClasses = " " + bodyClasses + " ";
+    if (" " + bodyElement.className + " ").includes(bodyClasses)) {
+      return true; 
+    }else{
+      return false;
+    }
+  }
 
   // Register functions to run when any page or specific pages are loaded.
   //
@@ -71,9 +80,8 @@
     var fireFunctions = [];
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
-      bodyClass = " " + (key.split('.').join(' ')) + " ";
-      console.log("MATCH", bodyClass, (" " + bodyElement.className + " "), (" " + bodyElement.className + " ").includes(bodyClass));
-      if (bodyClass === 'component' || (" " + bodyElement.className + " ").includes(bodyClass)) {
+      bodyClass = key.split('.').join(' ');
+      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
@@ -113,8 +121,8 @@
 
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {      
-      bodyClass = " " + (key.split('.').join(' ')) + " ";
-      if (bodyClass === 'component' || (" " + bodyElement.className + " ").includes(bodyClass)) {
+      bodyClass = key.split('.').join(' ');
+      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
