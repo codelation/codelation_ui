@@ -71,8 +71,8 @@
     var fireFunctions = [];
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
-      bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || bodyElement.className.includes(bodyClass)) {
+      bodyClass = " " + (key.split('.').join(' ')) + " ";
+      if (bodyClass === 'component' || (" " + bodyElement.className + " ").includes(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
@@ -111,9 +111,9 @@
     var fireLastFunctions = [];
 
     // Determine which functions should be fired
-    $.each(app.exitFunctions, function(key, functions) {
-      bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || bodyElement.className.includes(bodyClass)) {
+    $.each(app.exitFunctions, function(key, functions) {      
+      bodyClass = " " + (key.split('.').join(' ')) + " ";
+      if (bodyClass === 'component' || (" " + bodyElement.className + " ").includes(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
