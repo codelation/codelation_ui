@@ -16,9 +16,9 @@
     component: []
   };
   
-  function matchBodyClasses(element, classes) {
+  function matchBodyClasses(classes) {
     classes = " " + classes + " ";
-    if (" " + element.className + " ").includes(classes)) {
+    if ((" " + document.body.className + " ").includes(classes)) {
       return true; 
     }else{
       return false;
@@ -72,7 +72,6 @@
 
   // Fires off any callbacks registered for enter, with or without Turbolinks.
   $(document).on('ready page:load page:restore', function() {
-    bodyElement = document.body;
 
     // Determine which functions should be fired
     var fireConfigFunctions = [];
@@ -81,7 +80,7 @@
     var fireLastFunctions = [];
     $.each(app.enterFunctions, function(key, functions) {
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || matchBodyClasses(bodyElement, bodyClass)) {
+      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
@@ -122,7 +121,7 @@
     // Determine which functions should be fired
     $.each(app.exitFunctions, function(key, functions) {      
       bodyClass = key.split('.').join(' ');
-      if (bodyClass === 'component' || matchBodyClasses(bodyElement, bodyClass)) {
+      if (bodyClass === 'component' || matchBodyClasses(bodyClass)) {
         fireFunctions = fireFunctions.concat(functions);
       }
 
