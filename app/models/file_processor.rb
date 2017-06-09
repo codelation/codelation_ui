@@ -28,7 +28,6 @@ class FileProcessor
       t_file = file.tempfile
       if size && file.content_type.match(/image\/.*/) && !file.content_type.include?("svg")
         parseFile = MiniMagick::Image.new(t_file.path).resize size
-        ap parseFile
         t_file = parseFile
       end
 
