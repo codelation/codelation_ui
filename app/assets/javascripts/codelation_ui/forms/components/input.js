@@ -550,6 +550,12 @@ Used to remove the icon if the field has one.  Only effects Date types right now
                 this.inputFormat = this._formatForUrl();
                 return false;
               }
+            } else if (this.type === 'password') {
+              if (this.min && String(value).length < this.min) {
+                this.message = "Password is not long enough";
+                this.inputFormat = "Required Length: " + this.min;
+                return false;
+              }
             } else if (this.isDate) {
               var res = this._valueIsDate(value);
               if (!res) {
