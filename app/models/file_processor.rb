@@ -9,7 +9,7 @@ class FileProcessor
     filename = args[:name] || args["name"]
     
     if file.is_a?(String)
-      return if name.nil?
+      return if filename.nil?
       s3 = Aws::S3::Resource.new()
       
       name = "#{path}/#{filename}"
