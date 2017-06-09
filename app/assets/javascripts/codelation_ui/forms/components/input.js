@@ -250,14 +250,16 @@ Used to remove the icon if the field has one.  Only effects Date types right now
           console.warn("Component not loaded")
         } else {
           self.$els.input.value = self.value;
-          var x = window.scrollX,
-            y = window.scrollY;
-          var focusedNode = $(':focus')[0];
-          self.$els.input.focus();
-          window.scrollTo(x, y);
-          self.$els.input.blur();
-          if (focusedNode) {
-            focusedNode.focus();
+          if (self.placeholder) {
+            var x = window.scrollX,
+                y = window.scrollY;
+            var focusedNode = $(':focus')[0];
+            self.$els.input.focus();
+            window.scrollTo(x, y);
+            self.$els.input.blur();
+            if (focusedNode) {
+              focusedNode.focus();
+            } 
           }
           self.setupInputFormatter();
           self.setValue(self.value);
