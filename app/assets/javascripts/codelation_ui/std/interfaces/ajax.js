@@ -20,11 +20,12 @@
   function queryStringFromOptions(options_arg, defaultOptions_arg) {
     var queries = [];
     if options_arg === undefined {
-      options_arg = null;
+      options_arg = {};
     }
     var options = JSON.parse(JSON.stringify(options_arg)) || {};
+    
     if defaultOptions_arg === undefined {
-      defaultOptions_arg = null;
+      defaultOptions_arg = {};
     }
     var defaultOptions = JSON.parse(JSON.stringify(defaultOptions_arg)) || {};
 
