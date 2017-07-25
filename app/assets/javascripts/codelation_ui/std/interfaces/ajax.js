@@ -20,8 +20,8 @@
   function queryStringFromOptions(options_arg, defaultOptions_arg) {
     var queries = [];
 
-    var options = options_arg || {};
-    var defaultOptions = defaultOptions_arg || {};
+    var options = JSON.parse(JSON.stringify(options_arg)) || {};
+    var defaultOptions = JSON.parse(JSON.stringify(defaultOptions_arg)) || {};
 
     // Add options to default options (overwrites any default)
     Object.keys(options).forEach(function(key) {
