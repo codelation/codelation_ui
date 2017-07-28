@@ -71,7 +71,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
 
   var template = '<div class="vue-input" :class="[message ? \'has-message\' : \'\', disabled ? \'disabled\' : \'\', type]">\
                     <i v-if="inputIcon" v-on:click="activeObject()" class="vue-input-icon fa" :class="[inputIcon]"></i>\
-                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'number\')" v-on:keyup.up="releaseIncrDecrKey()" v-on:keyup.down="releaseIncrDecrKey()" v-on:keydown.up="holdIncrKey()" v-on:keydown.down="holdDecrKey()" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
+                    <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" maxlength="{{ maxlength }}" v-if="showInputFor(\'number\')" v-on:keyup.up="releaseIncrDecrKey()" v-on:keyup.down="releaseIncrDecrKey()" v-on:keydown.up="holdIncrKey()" v-on:keydown.down="holdDecrKey()" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'string\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="password" name="{{ name }}" v-if="showInputFor(\'password\')" v-on:keyup.enter="inputChange()" :placeholder="placeholder" v-el:input>\
                     <input :disabled="disabled" id="{{ id}}" type="text" name="{{ name }}" v-if="showInputFor(\'date\')" v-on:keyup.enter="inputChange()" v-on:keyup.up="incrementValue()" v-on:keyup.down="decrementValue()" v-el:input :placeholder="placeholder">\
@@ -162,6 +162,9 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       },
       'precision': {
         default: null
+      },
+      'maxlength': {
+        default: ""
       },
       'min': {
         default: null
