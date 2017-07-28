@@ -89,6 +89,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'numeric': 'number',
     'date': 'date',
     'calendar': 'date',
+    'year': 'year',
     'percent': 'percent',
     'bool': 'bool',
     'check': 'bool',
@@ -112,6 +113,7 @@ Used to remove the icon if the field has one.  Only effects Date types right now
     'numeric': 'number',
     'date': 'date',
     'calendar': 'date',
+    'year': 'number',
     'percent': 'number',
     'bool': 'bool',
     'check': 'bool',
@@ -139,6 +141,10 @@ Used to remove the icon if the field has one.  Only effects Date types right now
       pSign: 's'
     },
     'number': {
+      wEmpty: 'empty'
+    },
+    'year': {
+      aSep: '',
       wEmpty: 'empty'
     },
     'integer': {
